@@ -1,0 +1,9 @@
+{
+  "name": "findash-prototype",
+  "version": "1.0.0",
+  "description": "FinDash — Dashboard Financeiro Inteligente",
+  "scripts": {
+    "dev": "npx -y serve . -l 3000 --cors",
+    "start": "npx -y serve . -l 3000 --cors"
+  }
+}

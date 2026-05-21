@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinDash — Dashboard Financeiro Inteligente</title>
+  <meta name="description" content="Dashboard financeiro inteligente para análise e visualização de dados bancários">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+  <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+</head>
+<body>
+
+<div class="app">
+  <!-- Mobile Toggle -->
+  <button class="mobile-toggle" id="mobileToggle"><i data-lucide="menu"></i></button>
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="logo-icon">F</div>
+        <span class="logo-text">FinDash</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#overview" class="nav-item active" data-page="overview">
+        <i data-lucide="layout-dashboard"></i><span>Visão Geral</span>
+      </a>
+      <a href="#import" class="nav-item" data-page="import">
+        <i data-lucide="upload"></i><span>Importar CSV</span>
+      </a>
+      <a href="#transactions" class="nav-item" data-page="transactions">
+        <i data-lucide="list"></i><span>Transações</span>
+      </a>
+      <a href="#analytics" class="nav-item" data-page="analytics">
+        <i data-lucide="bar-chart-3"></i><span>Análises</span>
+      </a>
+      <a href="#recurring" class="nav-item" data-page="recurring">
+        <i data-lucide="repeat"></i><span>Recorrências</span>
+      </a>
+      <a href="#settings" class="nav-item" data-page="settings">
+        <i data-lucide="settings"></i><span>Configurações</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="storage-info">
+        <i data-lucide="database"></i>
+        <span id="storageCount">0 transações</span>
+      </div>
+      <span class="version">FinDash v1.0.0</span>
+    </div>
+  </aside>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-content">
+
+    <!-- ===== OVERVIEW ===== -->
+    <section class="page active" id="page-overview">
+      <div class="page-header">
+        <h1 class="page-title">Visão Geral</h1>
+        <div class="header-actions">
+          <button class="btn btn-secondary btn-sm" id="btnRefresh"><i data-lucide="refresh-cw"></i> Atualizar</button>
+        </div>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card balance">
+          <div class="kpi-label"><i data-lucide="wallet"></i> Saldo Total</div>
+          <div class="kpi-value" id="kpiBalance">R$ 0,00</div>
+          <div class="kpi-sub" id="kpiBalanceSub">Importe dados para começar</div>
+          <div class="kpi-icon balance"><i data-lucide="wallet"></i></div>
+          <div style="display:none" data-kpi-before></div>
+        </div>
+        <div class="kpi-card income">
+          <div class="kpi-label"><i data-lucide="trending-up"></i> Receitas</div>
+          <div class="kpi-value positive" id="kpiIncome">R$ 0,00</div>
+          <div class="kpi-sub" id="kpiIncomeSub">—</div>
+          <div class="kpi-icon income"><i data-lucide="trending-up"></i></div>
+        </div>
+        <div class="kpi-card expense">
+          <div class="kpi-label"><i data-lucide="trending-down"></i> Despesas</div>
+          <div class="kpi-value negative" id="kpiExpense">R$ 0,00</div>
+          <div class="kpi-sub" id="kpiExpenseSub">—</div>
+          <div class="kpi-icon expense"><i data-lucide="trending-down"></i></div>
+        </div>
+        <div class="kpi-card savings">
+          <div class="kpi-label"><i data-lucide="piggy-bank"></i> Economia</div>
+          <div class="kpi-value" id="kpiSavings">0%</div>
+          <div class="kpi-sub" id="kpiSavingsSub">Taxa de economia</div>
+          <div class="kpi-icon savings"><i data-lucide="piggy-bank"></i></div>
+        </div>
+      </div>
+      <div class="charts-grid">
+        <div class="card">
+          <div class="card-title">Receitas vs Despesas</div>
+          <div class="chart-container" id="chartLine"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Despesas por Categoria</div>
+          <div class="chart-container" id="chartDoughnut"></div>
+        </div>
+      </div>
+      <div class="card" id="overviewRecent">
+        <div class="card-title">Transações Recentes</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th></tr></thead>
+            <tbody id="recentTableBody"><tr><td colspan="4" style="text-align:center;color:var(--text-tertiary);padding:40px">Nenhuma transação importada</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== IMPORT ===== -->
+    <section class="page" id="page-import">
+      <div class="page-header">
+        <h1 class="page-title">Importar CSV</h1>
+        <div class="header-actions">
+          <button class="btn btn-secondary btn-sm" id="btnDownloadSample"><i data-lucide="download"></i> Baixar Planilha Exemplo</button>
+        </div>
+      </div>
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" accept=".csv,.txt" id="csvInput" class="upload-input">
+        <div class="upload-icon"><i data-lucide="upload-cloud"></i></div>
+        <div class="upload-title">Arraste seu arquivo CSV aqui</div>
+        <div class="upload-subtitle">ou clique para selecionar</div>
+        <div class="upload-hint">Formatos aceitos: .csv, .txt · Separadores: vírgula, ponto-e-vírgula, tab</div>
+      </div>
+      <div class="import-history">
+        <div class="card" style="margin-top:24px">
+          <div class="card-title">Histórico de Importações</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Data</th><th>Arquivo</th><th>Importados</th><th>Erros</th><th>Ações</th></tr></thead>
+              <tbody id="importHistoryBody"><tr><td colspan="5" style="text-align:center;color:var(--text-tertiary);padding:30px">Nenhuma importação realizada</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TRANSACTIONS ===== -->
+    <section class="page" id="page-transactions">
+      <div class="page-header">
+        <h1 class="page-title">Transações</h1>
+        <div class="header-actions">
+          <button class="btn btn-secondary btn-sm" id="btnExportCSV"><i data-lucide="download"></i> Exportar CSV</button>
+          <button class="btn btn-primary btn-sm" id="btnExportPDF"><i data-lucide="file-text"></i> Relatório PDF</button>
+        </div>
+      </div>
+      <div class="filter-bar">
+        <input type="text" class="input search-input" id="filterSearch" placeholder="Buscar por descrição, categoria...">
+        <select class="select" id="filterCategory"><option value="all">Todas as categorias</option></select>
+        <select class="select" id="filterType">
+          <option value="all">Todos os tipos</option>
+          <option value="income">Receitas</option>
+          <option value="expense">Despesas</option>
+        </select>
+        <input type="date" class="input" id="filterDateFrom" style="width:160px">
+        <input type="date" class="input" id="filterDateTo" style="width:160px">
+        <div class="filter-spacer"></div>
+        <button class="btn btn-secondary btn-sm" id="btnClearFilters"><i data-lucide="x"></i> Limpar</button>
+      </div>
+      <div class="card" style="padding:0">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th data-sort="date" class="sorted">Data ↓</th>
+                <th data-sort="description">Descrição</th>
+                <th data-sort="category">Categoria</th>
+                <th>Tipo</th>
+                <th data-sort="amount">Valor</th>
+              </tr>
+            </thead>
+            <tbody id="transactionsTableBody"><tr><td colspan="5" style="text-align:center;color:var(--text-tertiary);padding:40px">Nenhuma transação</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="pagination">
+        <span id="paginationInfo">0 transações</span>
+        <div class="pagination-btns" id="paginationBtns"></div>
+      </div>
+    </section>
+
+    <!-- ===== ANALYTICS ===== -->
+    <section class="page" id="page-analytics">
+      <div class="page-header">
+        <h1 class="page-title">Análises</h1>
+      </div>
+      <div class="charts-grid" style="margin-bottom:28px">
+        <div class="card">
+          <div class="card-title">Comparação Mensal</div>
+          <div class="chart-container" id="chartBar"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Top Categorias de Gasto</div>
+          <div id="topCategoriesList" style="padding:8px 0"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== RECURRING ===== -->
+    <section class="page" id="page-recurring">
+      <div class="page-header">
+        <h1 class="page-title">Recorrências</h1>
+      </div>
+      <div class="kpi-grid" style="margin-bottom:24px">
+        <div class="kpi-card expense">
+          <div class="kpi-label"><i data-lucide="repeat"></i> Gasto Recorrente Mensal</div>
+          <div class="kpi-value negative" id="kpiRecurringTotal">R$ 0,00</div>
+          <div class="kpi-sub" id="kpiRecurringSub">0 assinaturas detectadas</div>
+          <div class="kpi-icon expense"><i data-lucide="repeat"></i></div>
+        </div>
+      </div>
+      <div class="recurring-grid" id="recurringGrid">
+        <div class="empty-state"><i data-lucide="search"></i><h3>Nenhuma recorrência detectada</h3><p>Importe pelo menos 2 meses de dados para a detecção funcionar</p></div>
+      </div>
+      <div class="card" style="margin-top:28px">
+        <div class="card-title">Projeção de Saldo — Próximos 30 dias</div>
+        <div class="chart-container" id="chartForecast"></div>
+        <div style="display:flex;gap:24px;margin-top:16px;font-size:13px;color:var(--text-secondary)" id="forecastSummary"></div>
+      </div>
+    </section>
+
+    <!-- ===== SETTINGS ===== -->
+    <section class="page" id="page-settings">
+      <div class="page-header">
+        <h1 class="page-title">Configurações</h1>
+      </div>
+      <div class="card settings-section">
+        <h3>Dados</h3>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Limpar todos os dados</div>
+            <div class="setting-desc">Remove todas as transações e importações do IndexedDB</div>
+          </div>
+          <button class="btn btn-danger btn-sm" id="btnClearAll"><i data-lucide="trash-2"></i> Limpar Tudo</button>
+        </div>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Exportar dados completos</div>
+            <div class="setting-desc">Baixa todas as transações em formato CSV</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btnExportAll"><i data-lucide="download"></i> Exportar CSV</button>
+        </div>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Exportar log de erros</div>
+            <div class="setting-desc">Baixa um relatório detalhado (TXT) com todos os erros de importação</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btnExportLogs"><i data-lucide="file-text"></i> Baixar Log</button>
+        </div>
+      </div>
+      <div class="card settings-section">
+        <h3>Sobre</h3>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">FinDash — Dashboard Financeiro Inteligente</div>
+            <div class="setting-desc">Versão 1.0.0 · Dados armazenados localmente via IndexedDB</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

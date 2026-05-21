@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Environment (nunca commitar secrets)
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Build
+dist/
+.next/
+.turbo/
+out/
+build/
+
+# Prisma
+services/api/prisma/*.db
+services/api/prisma/*.db-journal
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Test / coverage
+coverage/
+playwright-report/
+test-results/
+
+# Certificados OFB (mTLS) — nunca no repositório
+*.pem
+*.key
+*.crt
+certs/
+
+# Doppler
+.doppler/
