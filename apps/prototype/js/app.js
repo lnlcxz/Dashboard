@@ -6,7 +6,7 @@ import { parseCSV } from './csv-parser.js';
 import { addTransactions, getAllTransactions, getImportHistory, deleteImport, clearAllData, getTransactionCount } from './storage.js';
 import { applyCategories } from './categorizer.js';
 import { applyFilters, paginate, computeStats } from './filters.js';
-import { renderLineChart, renderDoughnutChart, renderBarChart, renderForecastChart, resizeAll } from './charts.js';
+import { renderLineChart, renderDoughnutChart, renderBarChart, renderForecastChart, resizeAll, clearCharts } from './charts.js';
 import { detectRecurring, getMonthlyRecurringTotal } from './recurring.js';
 import { generateForecast } from './forecast.js';
 import { exportCSV, exportPDF, formatBRL, formatDate } from './export.js';
@@ -83,13 +83,24 @@ function setupUpload() {
 }
 
 async function handleFile(file) {
-  if (!file.name.match(/\.(csv|txt)$/i)) {
-    showToast('Formato inválido. Use .csv ou .txt', 'error');
+  if (!file.name.match(/\.(csv|txt|xls|xlsx)$/i)) {
+    showToast('Formato inválido. Use .csv, .txt, .xls ou .xlsx', 'error');
     return;
   }
 
   try {
-    const text = await file.text();
+    let text = '';
+    if (file.name.match(/\.(xls|xlsx)$/i)) {
+      if (!window.XLSX) throw new Error('Biblioteca XLSX não carregada no navegador.');
+      const buffer = await file.arrayBuffer();
+      const workbook = window.XLSX.read(buffer, { type: 'array' });
+      const firstSheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[firstSheetName];
+      text = window.XLSX.utils.sheet_to_csv(worksheet);
+      console.log(`Planilha Excel lida e convertida para CSV (${text.length} bytes)`);
+    } else {
+      text = await file.text();
+    }
 
     // === LOG COMPLETO DA IMPORTAÇÃO ===
     console.group(`📊 FinDash — Importação: ${file.name}`);
@@ -98,6 +109,24 @@ async function handleFile(file) {
 
     const result = parseCSV(text);
 
+    if (result.status === 'rejected') {
+      showToast(result.reason, 'error');
+      // Save rejection to db
+      await addTransactions([], {
+        fileName: file.name,
+        total: 0,
+        parsed: 0,
+        errors: 1,
+        status: 'rejected',
+        rejectedReason: result.reason,
+        errorDetails: [result.reason],
+        metadata: { headers: result.headers }
+      });
+      await loadData();
+      return;
+    }
+
+    console.log(`✅ Modelo detectado: ${result.modelName}`);
     console.log(`✅ Linhas processadas com sucesso: ${result.parsed}`);
     console.log(`❌ Linhas ignoradas: ${result.errors.length}`);
     console.log(`📋 Total de linhas de dados: ${result.total}`);
@@ -131,8 +160,10 @@ async function handleFile(file) {
       total: result.total,
       parsed: result.parsed,
       errors: result.errors.length,
+      status: 'success',
       errorDetails: result.errors,
       metadata: {
+        modelName: result.modelName,
         separator: result.separator,
         headers: result.headers,
         mapping: result.mapping
@@ -191,6 +222,8 @@ function updateCharts() {
   if (Object.keys(s.byMonth).length > 0) {
     renderLineChart('chartLine', s.byMonth);
     renderDoughnutChart('chartDoughnut', s.byCat);
+  } else {
+    clearCharts();
   }
 }
 
@@ -328,6 +361,17 @@ async function updateImportHistory() {
   }
 
   tbody.innerHTML = imports.map(imp => {
+    if (imp.status === 'rejected') {
+      return `
+        <tr style="background:rgba(244,63,94,0.03)">
+          <td>${formatDate(imp.date)}</td>
+          <td>${escapeHtml(imp.fileName)}</td>
+          <td colspan="2"><span style="color:var(--danger);font-size:13px;font-weight:500"><i data-lucide="alert-triangle" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px"></i> Rejeitado: ${escapeHtml(imp.rejectedReason)}</span></td>
+          <td><button class="btn btn-danger btn-sm" data-delete-import="${imp.id}"><i data-lucide="trash-2"></i></button></td>
+        </tr>
+      `;
+    }
+
     const hasErrors = imp.errors && imp.errors > 0;
     const errorDetailsHtml = hasErrors && imp.errorDetails && imp.errorDetails.length > 0
       ? `<tr class="error-detail-row" id="errors-${imp.id}" style="display:none">
@@ -420,11 +464,16 @@ function updateRecurring() {
 // ====== ANALYTICS ======
 function updateAnalytics() {
   const s = currentStats;
+  const catList = document.getElementById('topCategoriesList');
+
   if (Object.keys(s.byMonth).length > 0) {
     renderBarChart('chartBar', s.byMonth);
+  } else {
+    // A limpeza do ECharts já ocorreu no updateCharts()
+    catList.innerHTML = '<div class="empty-state" style="padding:30px"><p>Sem dados de categorias</p></div>';
+    return;
   }
 
-  const catList = document.getElementById('topCategoriesList');
   const catEntries = Object.entries(s.byCat).sort((a, b) => b[1] - a[1]).slice(0, 8);
   const maxCat = catEntries.length > 0 ? catEntries[0][1] : 1;
 

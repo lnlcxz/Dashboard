@@ -1,0 +1,16 @@
+Mês,Categoria,Subcategoria,Tipo,Descrição,Valor (R$),Entradas,Saídas,Investimentos,Saldo
+Janeiro,Compras,,Gasto,,"725,64",,"725,64",,
+Janeiro,Serviços,,Gasto,,"699,73",,"699,73",,
+Janeiro,Telecomunicação,,Gasto,,"354,20",,"354,20",,
+Janeiro,Alimentos e bebidas,,Gasto,,"235,61",,"235,61",,
+Janeiro,Supermercado,,Gasto,,"223,06",,"223,06",,
+Janeiro,Transferências,Enviado,Transferência,PIX,"960,00",,"960,00",,
+Janeiro,Transferências,Recebido,Transferência,PIX,"3502,62","3502,62",,," "
+Janeiro,Transferências,Enviado,Transferência,Outros,"26,22",,"26,22",,
+Janeiro,Transferências,Recebido,Transferência,Outros,"3206,22","3206,22",,," "
+Janeiro,Investimentos,Aplicado,,CDB,"657,95",,"657,95","657,95",
+Janeiro,Faturas de cartão,,Gasto,,"331,25",,"331,25",,
+Janeiro,Parcelas,Ativas,,Compra parcelada,"254,62",,"254,62",,
+Janeiro,Parcelas,Comprometido,,Compra parcelada,"356,28",,"356,28",,
+Janeiro,Resumo,,Total,Total gasto,"3911,28",,"3911,28",,"2847,39"
+Janeiro,Resumo,,Total,Total recebido,"6758,67","6758,67",,,"2847,39"

@@ -63,6 +63,8 @@ export async function addTransactions(transactions, importMeta) {
       id: importId,
       date: new Date().toISOString(),
       fileName: importMeta.fileName,
+      status: importMeta.status || 'success',
+      rejectedReason: importMeta.rejectedReason || '',
       totalRows: importMeta.total,
       importedRows: importMeta.parsed,
       errors: importMeta.errors,

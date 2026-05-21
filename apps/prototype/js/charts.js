@@ -179,4 +179,10 @@ export function resizeAll() {
   }
 }
 
+export function clearCharts() {
+  for (const chart of Object.values(chartInstances)) {
+    if (chart && !chart.isDisposed()) chart.clear();
+  }
+}
+
 window.addEventListener('resize', () => { setTimeout(resizeAll, 100); });

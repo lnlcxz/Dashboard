@@ -2,6 +2,9 @@
 // FINDASH — CSV Parser (Robust, BR-aware)
 // ============================================
 
+import { detectModel } from './parser-models.js';
+
+
 export function detectSeparator(firstLine) {
   const counts = { ';': 0, ',': 0, '\t': 0 };
   for (const ch of firstLine) {
@@ -110,14 +113,30 @@ let idCounter = 0;
 
 export function parseCSV(text) {
   const lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n').filter(l => l.trim());
-  if (lines.length < 2) throw new Error('CSV precisa de pelo menos 2 linhas (cabeçalho + dados)');
+  if (lines.length < 2) throw new Error('Arquivo precisa de pelo menos 2 linhas (cabeçalho + dados)');
 
   const sep = detectSeparator(lines[0]);
   const headers = splitCSVLine(lines[0], sep);
+  
+  // 1. Identificar o modelo da planilha
+  const model = detectModel(headers);
+  if (!model) {
+    return {
+      status: 'rejected',
+      reason: 'Modelo de planilha desconhecido. O cabeçalho não confere com nenhuma adquirente cadastrada.',
+      transactions: [],
+      errors: [],
+      total: 0,
+      parsed: 0,
+      headers
+    };
+  }
+
+  // 2. Mapear colunas genéricas (poderá ser aprimorado com mapeamento específico por modelo no futuro)
   const mapping = mapColumns(headers);
 
   if (mapping.date === undefined) throw new Error('Coluna de data não encontrada. Use: Data, Date, Dt');
-  if (mapping.amount === undefined && mapping._debit === undefined) throw new Error('Coluna de valor não encontrada. Use: Valor, Amount, Débito/Crédito');
+  if (mapping.amount === undefined && mapping._debit === undefined) throw new Error('Coluna de valor financeiro não encontrada.');
 
   const transactions = [];
   const errors = [];
@@ -201,6 +220,8 @@ export function parseCSV(text) {
   }
 
   return { 
+    status: 'success',
+    modelName: model.name,
     transactions, 
     errors, 
     total: lines.length - 1, 

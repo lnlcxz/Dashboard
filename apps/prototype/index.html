@@ -11,6 +11,7 @@
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
   <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
 </head>
@@ -126,11 +127,11 @@
         </div>
       </div>
       <div class="upload-zone" id="uploadZone">
-        <input type="file" accept=".csv,.txt" id="csvInput" class="upload-input">
+        <input type="file" accept=".csv,.txt,.xls,.xlsx" id="csvInput" class="upload-input">
         <div class="upload-icon"><i data-lucide="upload-cloud"></i></div>
-        <div class="upload-title">Arraste seu arquivo CSV aqui</div>
+        <div class="upload-title">Arraste seu arquivo de planilha aqui</div>
         <div class="upload-subtitle">ou clique para selecionar</div>
-        <div class="upload-hint">Formatos aceitos: .csv, .txt · Separadores: vírgula, ponto-e-vírgula, tab</div>
+        <div class="upload-hint">Formatos aceitos: .xls, .xlsx, .csv, .txt</div>
       </div>
       <div class="import-history">
         <div class="card" style="margin-top:24px">
