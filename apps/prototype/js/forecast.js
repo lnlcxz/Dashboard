@@ -59,20 +59,15 @@ export function generateForecast(transactions, recurringItems = [], horizon = 30
   const dailyIncome = avgMonthlyIncome / 30;
   const dailyExpense = avgMonthlyExpense / 30;
 
-  // Add recurring fixed costs
-  let recurringDaily = 0;
-  for (const item of recurringItems) {
-    recurringDaily += item.avgAmount / (item.intervalDays || 30);
-  }
-
   // Generate daily forecast points
   const now = new Date();
   const points = [];
   let runningBalance = 0;
 
-  // Calculate current balance from all transactions
+  // Calculate current balance using type-aware signed sum (consistent with computeStats)
   for (const tx of transactions) {
-    runningBalance += tx.amount; // amount is already signed (negative for expenses)
+    if (tx.type === 'income') runningBalance += Math.abs(tx.amount);
+    else runningBalance -= Math.abs(tx.amount);
   }
 
   const startBalance = runningBalance;
@@ -81,9 +76,7 @@ export function generateForecast(transactions, recurringItems = [], horizon = 30
     const d = new Date(now);
     d.setDate(d.getDate() + i);
 
-    const projIncome = dailyIncome;
-    const projExpense = dailyExpense;
-    runningBalance += projIncome - projExpense;
+    runningBalance += dailyIncome - dailyExpense;
 
     points.push({
       date: d.toISOString().slice(0, 10),

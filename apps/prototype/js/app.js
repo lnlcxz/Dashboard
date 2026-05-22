@@ -46,8 +46,13 @@ function setupNavigation() {
       // Close mobile sidebar
       document.getElementById('sidebar').classList.remove('open');
       document.getElementById('overlay').classList.remove('active');
-      // Resize charts on page switch
-      setTimeout(resizeAll, 50);
+      // Re-render charts after page is visible (ECharts needs non-zero container dimensions)
+      setTimeout(() => {
+        resizeAll();
+        if (pageId === 'overview') updateCharts();
+        else if (pageId === 'analytics') updateAnalytics();
+        else if (pageId === 'recurring') updateRecurring();
+      }, 50);
     });
   });
 

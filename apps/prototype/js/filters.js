@@ -72,7 +72,6 @@ export function computeStats(transactions) {
   let totalExpense = 0;
   const byCat = {};
   const byMonth = {};
-  const byDay = {};
 
   for (const tx of transactions) {
     if (tx.type === 'income') totalIncome += Math.abs(tx.amount);
@@ -89,12 +88,6 @@ export function computeStats(transactions) {
     if (!byMonth[monthKey]) byMonth[monthKey] = { income: 0, expense: 0 };
     if (tx.type === 'income') byMonth[monthKey].income += Math.abs(tx.amount);
     else byMonth[monthKey].expense += Math.abs(tx.amount);
-
-    // By day
-    const dayKey = d.toISOString().slice(0, 10);
-    if (!byDay[dayKey]) byDay[dayKey] = { income: 0, expense: 0 };
-    if (tx.type === 'income') byDay[dayKey].income += Math.abs(tx.amount);
-    else byDay[dayKey].expense += Math.abs(tx.amount);
   }
 
   const balance = totalIncome - totalExpense;
@@ -107,7 +100,6 @@ export function computeStats(transactions) {
     savingsRate,
     byCat,
     byMonth,
-    byDay,
     transactionCount: transactions.length,
   };
 }
