@@ -1,6 +1,25 @@
 # CHANGELOG
 
-## [Unreleased] — 2026-05-22
+## [Unreleased] — 2026-05-22 (parser v2)
+
+### Fixed
+
+- **`csv-parser.js`** — Linhas com `VALOR_R$` contendo placeholders de agrupamento (`(incluído acima)`, `(incluído no total)`, `(variável...)`) eram geradas como erro no histórico; agora são **ignoradas silenciosamente** sem contabilizar erro e sem criar transação (evita double-counting)
+- **`csv-parser.js`** — Adicionada função `isAmountPlaceholder()` para detecção centralizada de marcadores de agrupamento (padrão: texto entre parênteses que não começa com dígito)
+- **`csv-parser.js`** — `resolveAmount()` agora retorna `{ amount, forceType, isPlaceholder }` — contrato explícito para linhas sem valor próprio
+- **`csv-parser.js`** — `mapColumns()` corrigido: alias `valor_r$` e `valor_rs` adicionados para reconhecer a coluna `VALOR_R$` corretamente (alias genérico `valor` capturava antes de forma ambígua)
+- **`csv-parser.js`** — Bloco RESUMO/RANKING ao final do arquivo detectado via `isSummaryBlockStart()` e interrompe o parsing antes de gerar erros em linhas estruturalmente diferentes
+- **`csv-parser.js`** — `TRANSFERENCIA INTERNA` e `INVESTIMENTO PROPRIO` (coluna `TIPO_MOVIMENTACAO`) ignorados silenciosamente via `SKIP_MOV_TYPES`
+- **`parser-models.js`** — Alias `valor_r$` adicionado à detecção do modelo genérico
+
+### Build / Testes
+
+- ✅ Build: OK
+- ✅ Servidor: `http://localhost:3000` funcional
+- ✅ Planilha `extrato_completo_lucas___2025_a_mai_2026.csv`: 12 linhas de placeholder e 20 linhas de resumo tratadas corretamente (sem erros falsos)
+- N/A Cobertura de testes automatizados
+
+
 
 ### Fixed
 

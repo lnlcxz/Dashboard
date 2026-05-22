@@ -38,7 +38,7 @@ export const ACQUIRER_MODELS = [
       const h = headers.map(x => x.toLowerCase().trim());
       // O modelo genérico precisa de no mínimo uma coluna de data e uma de valor
       const hasDate = h.some(x => ['data', 'date', 'dt', 'data_lancamento', 'mês', 'mes'].some(y => x.includes(y)));
-      const hasAmount = h.some(x => ['valor', 'amount', 'débito', 'crédito', 'debito', 'credito', 'entrada', 'saida', 'saída'].some(y => x.includes(y)));
+      const hasAmount = h.some(x => ['valor_r$', 'valor_rs', 'valor', 'amount', 'débito', 'crédito', 'debito', 'credito', 'entrada', 'saida', 'saída'].some(y => x.includes(y)));
       return hasDate && hasAmount;
     }
   }
