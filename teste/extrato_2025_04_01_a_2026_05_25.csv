@@ -1,0 +1,145 @@
+# Extrato (por grupo)
+Grupo,Entradas (R$),Saídas (R$),Saldo líquido (R$),Nº de movimentações,Menor valor (R$),Maior valor (R$),"Valor médio (R$)"
+Estimativa parcial da fatura esperada 2026-06-11 (após 2026-05-03),282.27,2420.05,-2137.77,53,0.00,0.00,"0.00"
+Fatura venc. 2026-05-11 (2026-04-03 a 2026-05-03),0.00,63.70,-63.70,1,63.70,63.70,"63.70"
+Fatura venc. 2026-04-10 (2026-03-03 a 2026-04-03),0.00,461.65,-461.65,1,461.65,461.65,"461.65"
+Fatura venc. 2026-03-10 (2026-02-03 a 2026-03-03),0.00,575.22,-575.22,1,575.22,575.22,"575.22"
+Fatura venc. 2026-02-10 (2026-01-03 a 2026-02-03),0.00,304.76,-304.76,1,304.76,304.76,"304.76"
+Fatura venc. 2026-01-12 (2025-12-03 a 2026-01-03),0.00,331.25,-331.25,1,331.25,331.25,"331.25"
+Fatura venc. 2025-12-10 (2025-11-03 a 2025-12-03),0.00,121.80,-121.80,1,121.80,121.80,"121.80"
+Fatura venc. 2025-11-10 (2025-10-03 a 2025-11-03),0.00,253.00,-253.00,1,253.00,253.00,"253.00"
+Fatura venc. 2025-10-10 (2025-09-03 a 2025-10-03),0.00,578.23,-578.23,1,578.23,578.23,"578.23"
+Fatura venc. 2025-09-10 (2025-08-03 a 2025-09-03),0.00,357.75,-357.75,1,357.75,357.75,"357.75"
+Fatura venc. 2025-08-11 (2025-07-03 a 2025-08-03),0.00,263.08,-263.08,1,263.08,263.08,"263.08"
+Fatura venc. 2025-07-10 (2025-06-03 a 2025-07-03),0.00,233.20,-233.20,1,233.20,233.20,"233.20"
+Fatura venc. 2025-06-10 (2025-05-03 a 2025-06-03),0.00,223.08,-223.08,1,223.08,223.08,"223.08"
+Fatura venc. 2025-05-12 (2025-04-03 a 2025-05-03),0.00,189.84,-189.84,1,189.84,189.84,"189.84"
+Fatura venc. 2025-04-10 (2025-03-03 a 2025-04-03),0.00,86.40,-86.40,1,86.40,86.40,"86.40"
+# Detalhes por categoria
+Categoria,Entradas (R$),Saídas (R$),Saldo líquido (R$),Nº de movimentações,Participação,Menor valor (R$),Maior valor (R$),Valor médio (R$),Primeira data,Última data,"Transações omitidas"
+Transferências,43323.21,1867.64,41455.57,127,0.1252,0.04,3151.22,355.83,2025-04-10,2026-05-23,"true"
+Transferência - PIX,3502.62,7986.44,-4483.82,46,0.0454,2.62,3500.00,249.76,2025-06-25,2026-05-09,"true"
+Compras,0.00,7161.06,-7161.07,298,0.2939,1.00,600.00,24.03,2025-04-08,2026-05-23,"true"
+Universidade,0.00,6714.40,-6714.40,14,0.0138,278.43,1601.39,479.60,2025-04-07,2026-04-30,"false"
+Serviços,0.00,5487.15,-5487.16,53,0.0523,1.79,983.63,103.53,2025-04-09,2026-05-23,"true"
+"Restaurantes, bares e lanchonetes",0.00,2476.48,-2476.48,56,0.0552,1.50,223.96,44.22,2025-05-11,2026-05-16,"true"
+Educação,0.00,2277.83,-2277.84,11,0.0108,100.05,767.90,207.07,2025-04-27,2026-03-08,"false"
+Supermercado,0.00,2227.80,-2227.81,72,0.071,1.50,200.00,30.94,2025-04-09,2026-05-24,"true"
+Alimentos e bebidas,0.00,1355.30,-1355.30,22,0.0217,2.00,500.00,61.60,2025-08-25,2026-05-19,"false"
+Serviços digitais,0.00,1012.99,-1013.00,24,0.0237,5.99,184.25,42.20,2025-04-13,2026-05-22,"false"
+Serviços automotivos,0.00,910.00,-910.00,28,0.0276,20.00,50.00,32.50,2025-12-04,2026-05-25,"true"
+Telecomunicação,0.00,855.18,-855.18,11,0.0108,53.00,245.00,77.73,2025-06-10,2026-05-12,"false"
+Internet,0.00,726.87,-726.87,18,0.0178,11.00,90.54,40.38,2025-07-01,2026-05-18,"false"
+Postos de gasolina,0.00,717.49,-717.49,26,0.0256,6.00,60.00,27.59,2025-05-10,2026-04-14,"true"
+Lazer,0.00,628.61,-628.61,6,0.0059,9.00,332.98,104.76,2025-12-05,2026-03-17,"false"
+Livraria,0.00,496.10,-496.10,5,0.0049,3.75,189.00,99.22,2025-08-12,2026-03-02,"false"
+Delivery de alimentos,0.00,493.85,-493.85,5,0.0049,42.49,176.95,98.77,2026-03-22,2026-05-23,"false"
+Saúde,0.00,316.88,-316.88,3,0.003,10.00,231.88,105.62,2025-11-09,2026-03-20,"false"
+Escola,0.00,300.00,-300.00,4,0.0039,75.00,75.00,75.00,2025-11-13,2026-02-13,"false"
+Vestuário,0.00,250.00,-250.00,1,0.001,250.00,250.00,250.00,2025-11-21,2025-11-21,"false"
+# Transações por categoria
+Categoria,Descrição,Tipo,Moeda,Conta,Valor total (R$),Nº de ocorrências,Menor valor (R$),Maior valor (R$),Valor médio (R$),Primeira data,"Última data"
+Universidade,PIX ENVIADO,DEBIT,BRL,Caixa Econômica Federal,3318.05,4,331.24,1601.39,829.51,2025-08-08,"2026-04-30"
+Universidade,Pagamento efetuado|FACULDADES METROPOLITANAS UNIDAS EDUCACIONAIS LTDA,DEBIT,BRL,Nubank,1678.36,5,278.43,531.24,335.67,2025-05-06,"2025-10-03"
+Universidade,PAG BOLETO IBC,DEBIT,BRL,Caixa Econômica Federal,1439.56,4,295.13,522.65,359.89,2025-11-03,"2026-04-08"
+Universidade,Pagamento efetuado|FACULDADES METROPOLITANAS UNIDAS EDUCACI,DEBIT,BRL,Nubank,278.43,1,278.43,278.43,278.43,2025-04-07,"2025-04-07"
+Educação,PIX ENVIADO,DEBIT,BRL,Caixa Econômica Federal,767.90,1,767.90,767.90,767.90,2026-02-23,"2026-02-23"
+Educação,Transferência enviada|INSTITUTO EDUCAR BRASIL PROGRAMAS EDUCAC,DEBIT,BRL,Nubank,375.22,1,375.22,375.22,375.22,2025-04-27,"2025-04-27"
+Educação,Educa Mais Brasil 1/3,DEBIT,BRL,Nubank,178.14,1,178.14,178.14,178.14,2026-01-08,"2026-01-08"
+Educação,Educa Mais Brasil 3/3,DEBIT,BRL,Nubank,178.12,1,178.12,178.12,178.12,2026-03-08,"2026-03-08"
+Educação,Educa Mais Brasil 2/3,DEBIT,BRL,Nubank,178.12,1,178.12,178.12,178.12,2026-02-08,"2026-02-08"
+Educação,Educa Mais Brasil 1/6,DEBIT,BRL,Nubank,100.09,1,100.09,100.09,100.09,2025-06-07,"2025-06-07"
+Educação,Educa Mais Brasil 6/6,DEBIT,BRL,Nubank,100.05,1,100.05,100.05,100.05,2025-11-07,"2025-11-07"
+Educação,Educa Mais Brasil 5/6,DEBIT,BRL,Nubank,100.05,1,100.05,100.05,100.05,2025-10-07,"2025-10-07"
+Educação,Educa Mais Brasil 4/6,DEBIT,BRL,Nubank,100.05,1,100.05,100.05,100.05,2025-09-07,"2025-09-07"
+Educação,Educa Mais Brasil 3/6,DEBIT,BRL,Nubank,100.05,1,100.05,100.05,100.05,2025-08-07,"2025-08-07"
+Educação,Educa Mais Brasil 2/6,DEBIT,BRL,Nubank,100.05,1,100.05,100.05,100.05,2025-07-07,"2025-07-07"
+Alimentos e bebidas,PIX ENVIADO,DEBIT,BRL,Caixa Econômica Federal,1355.30,22,2.00,500.00,61.60,2025-08-25,"2026-05-19"
+Serviços digitais,Ebn *Tiktok Shop 2/2,DEBIT,BRL,Nubank,184.25,1,184.25,184.25,184.25,2026-03-11,"2026-03-11"
+Serviços digitais,Ebn *Tiktok Shop 1/2,DEBIT,BRL,Nubank,184.25,1,184.25,184.25,184.25,2026-02-11,"2026-02-11"
+Serviços digitais,Microsoft*Store,DEBIT,BRL,Nubank,134.99,2,35.99,99.00,67.48,2025-06-16,"2025-07-31"
+Serviços digitais,Dl*Google Hbo Ma,DEBIT,BRL,Nubank,119.60,4,29.90,29.90,29.90,2026-02-22,"2026-05-22"
+Serviços digitais,Dl*Alipay Alipay 2/2,DEBIT,BRL,Nubank,81.25,1,81.25,81.25,81.25,2025-08-28,"2025-08-28"
+Serviços digitais,Dl*Alipay Alipay 1/2,DEBIT,BRL,Nubank,81.25,1,81.25,81.25,81.25,2025-07-28,"2025-07-28"
+Serviços digitais,Dm *Spotify,DEBIT,BRL,Nubank,35.70,3,11.90,11.90,11.90,2025-04-13,"2025-07-14"
+Serviços digitais,Google Hbo Max Stream,DEBIT,BRL,Nubank,29.90,1,29.90,29.90,29.90,2026-01-24,"2026-01-24"
+Serviços digitais,Dm*Spotify,DEBIT,BRL,Nubank,24.80,2,11.90,12.90,12.40,2025-08-14,"2025-09-14"
+Serviços digitais,PIX ENVIADO,DEBIT,BRL,Caixa Econômica Federal,23.84,1,23.84,23.84,23.84,2025-10-27,"2025-10-27"
+Serviços digitais,Ebn *Spotify,DEBIT,BRL,Nubank,21.90,1,21.90,21.90,21.90,2025-05-13,"2025-05-13"
+Serviços digitais,Netflix Entretenimento,DEBIT,BRL,Nubank,20.90,1,20.90,20.90,20.90,2026-04-30,"2026-04-30"
+Serviços digitais,Netflix.Com,DEBIT,BRL,Nubank,20.90,1,20.90,20.90,20.90,2026-01-30,"2026-01-30"
+Serviços digitais,Dl*Google Dragon,DEBIT,BRL,Nubank,17.59,1,17.59,17.59,17.59,2025-12-18,"2025-12-18"
+Serviços digitais,Transferência enviada|OKTO TECH LTDA.,DEBIT,BRL,Nubank,16.98,1,16.98,16.98,16.98,2025-06-09,"2025-06-09"
+Serviços digitais,Demerge Bras*Help.Hbom,DEBIT,BRL,Nubank,8.90,1,8.90,8.90,8.90,2025-11-16,"2025-11-16"
+Serviços digitais,Transferência enviada|NUVEI DO BRASIL INSTITUICAO DE PAGAMENTO LTDA.,DEBIT,BRL,Nubank,5.99,1,5.99,5.99,5.99,2025-07-04,"2025-07-04"
+Telecomunicação,PIX ENVIADO,DEBIT,BRL,Caixa Econômica Federal,574.16,7,54.00,245.00,82.02,2025-08-19,"2026-03-12"
+Telecomunicação,Conta Vivo,DEBIT,BRL,Nubank,120.00,1,120.00,120.00,120.00,2026-05-12,"2026-05-12"
+Telecomunicação,Transferência enviada|TELEFONICA BRASIL S.A.,DEBIT,BRL,Nubank,54.00,1,54.00,54.00,54.00,2025-10-10,"2025-10-10"
+Telecomunicação,Transferência enviada|TELEFONICA BRAS,DEBIT,BRL,Nubank,54.00,1,54.00,54.00,54.00,2025-07-18,"2025-07-18"
+Telecomunicação,Transferência enviada|TELEFONICA BRASIL S A,DEBIT,BRL,Nubank,53.00,1,53.00,53.00,53.00,2025-06-10,"2025-06-10"
+Internet,Transferência enviada|BYTEDANCE BRASIL TECNOLOGIA LTDA.,DEBIT,BRL,Nubank,254.83,6,14.77,80.98,42.47,2025-07-01,"2026-05-13"
+Internet,Transferência enviada|BYTEDANCE BRASIL TECNOLOGIA LTDA,DEBIT,BRL,Nubank,243.39,5,29.36,90.54,48.67,2025-10-10,"2026-05-13"
+Internet,PIX ENVIADO,DEBIT,BRL,Caixa Econômica Federal,228.64,7,11.00,69.09,32.65,2025-12-26,"2026-05-18"
+Lazer,PIX ENVIADO,DEBIT,BRL,Caixa Econômica Federal,532.88,3,9.00,332.98,177.62,2025-12-22,"2026-03-17"
+Lazer,Pag*Steam 1/2,DEBIT,BRL,Nubank,76.48,2,19.25,57.24,38.24,2025-12-05,"2025-12-29"
+Lazer,Pag*Steam 2/2,DEBIT,BRL,Nubank,19.23,1,19.23,19.23,19.23,2026-01-05,"2026-01-05"
+Livraria,Transferência enviada|Amazon Serviços de Varejo do Brasil LTDA.,DEBIT,BRL,Nubank,377.10,2,188.10,189.00,188.55,2025-08-12,"2025-08-13"
+Livraria,PIX ENVIADO,DEBIT,BRL,Caixa Econômica Federal,110.00,1,110.00,110.00,110.00,2026-03-02,"2026-03-02"
+Livraria,55181669raulde,DEBIT,BRL,Nubank,9.00,2,3.75,5.25,4.50,2025-08-20,"2025-08-20"
+Delivery de alimentos,PIX ENVIADO,DEBIT,BRL,Caixa Econômica Federal,391.79,3,43.89,176.95,130.59,2026-05-04,"2026-05-05"
+Delivery de alimentos,Compra no débito via NuPay|iFood,DEBIT,BRL,Nubank,59.57,1,59.57,59.57,59.57,2026-05-23,"2026-05-23"
+Delivery de alimentos,iFood,DEBIT,BRL,Nubank,42.49,1,42.49,42.49,42.49,2026-03-22,"2026-03-22"
+Saúde,PIX ENVIADO,DEBIT,BRL,Caixa Econômica Federal,306.88,2,75.00,231.88,153.44,2026-02-28,"2026-03-20"
+Saúde,Wolf Leonardo,DEBIT,BRL,Nubank,10.00,1,10.00,10.00,10.00,2025-11-09,"2025-11-09"
+Escola,Br1*Cashbarber,DEBIT,BRL,Nubank,300.00,4,75.00,75.00,75.00,2025-11-13,"2026-02-13"
+Vestuário,PIX ENVIADO,DEBIT,BRL,Caixa Econômica Federal,250.00,1,250.00,250.00,250.00,2025-11-21,"2025-11-21"
+# Categorias gerais
+Categoria geral,Entradas (R$),Saídas (R$),Saldo líquido (R$),Nº de movimentações,Participação,"Subcategorias"
+Finanças,46825.83,9854.08,36971.75,173,0.2084,"2"
+Educação,0.00,9292.23,-9292.24,29,0.0349,"3"
+Compras,0.00,7657.16,-7657.17,303,0.3651,"2"
+Alimentação,0.00,6553.43,-6553.44,155,0.1867,"4"
+Outros,0.00,5737.15,-5737.16,54,0.0651,"2"
+Transporte,0.00,1627.49,-1627.49,54,0.0651,"2"
+Moradia,0.00,1582.05,-1582.05,29,0.0349,"2"
+Serviços digitais,0.00,1012.99,-1013.00,24,0.0289,"1"
+Lazer e entretenimento,0.00,628.61,-628.61,6,0.0072,"1"
+Saúde e bem-estar,0.00,316.88,-316.88,3,0.0036,"1"
+# Subcategorias por categoria geral
+Categoria geral,Subcategoria,Entradas (R$),Saídas (R$),Saldo líquido (R$),Nº de movimentações,"Participação na categoria"
+Alimentação,"Restaurantes, bares e lanchonetes",0.00,2476.48,-2476.48,56,"0.3613"
+Alimentação,Supermercado,0.00,2227.80,-2227.81,72,"0.4645"
+Alimentação,Alimentos e bebidas,0.00,1355.30,-1355.30,22,"0.1419"
+Alimentação,Delivery de alimentos,0.00,493.85,-493.85,5,"0.0323"
+Compras,Compras,0.00,7161.06,-7161.07,298,"0.9835"
+Compras,Livraria,0.00,496.10,-496.10,5,"0.0165"
+Educação,Universidade,0.00,6714.40,-6714.40,14,"0.4828"
+Educação,Educação,0.00,2277.83,-2277.84,11,"0.3793"
+Educação,Escola,0.00,300.00,-300.00,4,"0.1379"
+Finanças,Transferências,43323.21,1867.64,41455.57,127,"0.7341"
+Finanças,Transferência - PIX,3502.62,7986.44,-4483.82,46,"0.2659"
+Lazer e entretenimento,Lazer,0.00,628.61,-628.61,6,"1"
+Moradia,Telecomunicação,0.00,855.18,-855.18,11,"0.3793"
+Moradia,Internet,0.00,726.87,-726.87,18,"0.6207"
+Outros,Serviços,0.00,5487.15,-5487.16,53,"0.9815"
+Outros,Vestuário,0.00,250.00,-250.00,1,"0.0185"
+Saúde e bem-estar,Saúde,0.00,316.88,-316.88,3,"1"
+Serviços digitais,Serviços digitais,0.00,1012.99,-1013.00,24,"1"
+Transporte,Serviços automotivos,0.00,910.00,-910.00,28,"0.5185"
+Transporte,Postos de gasolina,0.00,717.49,-717.49,26,"0.4815"
+# Faturas oficiais do cartão
+Data de vencimento,Cartão,Valor da fatura (R$),Moeda,Início do período,Fim do período,"Status do provedor"
+2026-05-11,Nubank,63.70,BRL,2026-04-03,2026-05-03,"PARTIAL_SUCCESS"
+2026-04-10,Nubank,461.65,BRL,2026-03-03,2026-04-03,"PARTIAL_SUCCESS"
+2026-03-10,Nubank,575.22,BRL,2026-02-03,2026-03-03,"PARTIAL_SUCCESS"
+2026-02-10,Nubank,304.76,BRL,2026-01-03,2026-02-03,"PARTIAL_SUCCESS"
+2026-01-12,Nubank,331.25,BRL,2025-12-03,2026-01-03,"PARTIAL_SUCCESS"
+2025-12-10,Nubank,121.80,BRL,2025-11-03,2025-12-03,"PARTIAL_SUCCESS"
+2025-11-10,Nubank,253.00,BRL,2025-10-03,2025-11-03,"PARTIAL_SUCCESS"
+2025-10-10,Nubank,578.23,BRL,2025-09-03,2025-10-03,"PARTIAL_SUCCESS"
+2025-09-10,Nubank,357.75,BRL,2025-08-03,2025-09-03,"PARTIAL_SUCCESS"
+2025-08-11,Nubank,263.08,BRL,2025-07-03,2025-08-03,"PARTIAL_SUCCESS"
+2025-07-10,Nubank,233.20,BRL,2025-06-03,2025-07-03,"PARTIAL_SUCCESS"
+2025-06-10,Nubank,223.08,BRL,2025-05-03,2025-06-03,"PARTIAL_SUCCESS"
+2025-05-12,Nubank,189.84,BRL,2025-04-03,2025-05-03,"PARTIAL_SUCCESS"
+2025-04-10,Nubank,86.40,BRL,2025-03-03,2025-04-03,PARTIAL_SUCCESS

@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "FinDash — Dashboard Financeiro Inteligente",
   "scripts": {
-    "dev": "npx -y serve . -l 3000 --cors",
-    "start": "npx -y serve . -l 3000 --cors"
+    "dev": "vite --port 3000",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 3000"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.0",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.14"
   }
 }

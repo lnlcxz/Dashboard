@@ -1,0 +1,21 @@
+DATA,DIA_SEMANA,DESCRICAO,TIPO,VALOR_R$,CONTA,CATEGORIA,SUBCATEGORIA,TIPO_MOVIMENTACAO,OBSERVACAO
+2025-04-27,Domingo,PIX RECEBIDO (Salário/Pagamento),CREDIT,2793.18,Nubank,Renda,Salário,RECEITA,Maior entrada do mês - provável salário base + VR
+2025-05-27,Terça,PIX RECEBIDO (Salário/Pagamento),CREDIT,2763.18,Nubank,Renda,Salário,RECEITA,Entrada recorrente mensal - salário base + VR
+2025-06-25,Quarta,PIX RECEBIDO (Salário/Pagamento),CREDIT,2823.18,Nubank,Renda,Salário,RECEITA,Entrada recorrente mensal - salário base + VR + possível plantão
+2025-07-25,Sexta,PIX RECEBIDO (Salário/Pagamento),CREDIT,2793.18,Nubank,Renda,Salário,RECEITA,Entrada recorrente mensal - salário base + VR
+2025-08-25,Segunda,PIX RECEBIDO (Salário/Pagamento),CREDIT,3248.85,Caixa Econômica Federal,Renda,Salário,RECEITA,Entrada recorrente mensal - salário base + VR + plantão(s)
+2025-09-25,Quinta,PIX RECEBIDO (Salário/Pagamento),CREDIT,2853.18,Nubank,Renda,Salário,RECEITA,Entrada recorrente mensal - salário base + VR + possível plantão
+2025-10-25,Sábado,PIX RECEBIDO (Salário/Pagamento),CREDIT,2763.18,Nubank,Renda,Salário,RECEITA,Entrada recorrente mensal - salário base + VR
+2025-11-25,Terça,PIX RECEBIDO (Salário/Pagamento),CREDIT,2793.18,Nubank,Renda,Salário,RECEITA,Entrada recorrente mensal - salário base + VR
+2025-12-25,Quinta,PIX RECEBIDO (Salário/Pagamento),CREDIT,3093.18,Nubank,Renda,Salário,RECEITA,Entrada recorrente mensal - salário base + VR + possível plantão
+2026-01-08,Quinta,PIX RECEBIDO (Salário/Pagamento),CREDIT,3500.00,Nubank,Renda,Salário,RECEITA,Confirmado nos dados - maior PIX RECEBIDO de jan/2026
+2026-02-25,Quarta,PIX RECEBIDO (Salário/Pagamento),CREDIT,3151.22,Nubank,Renda,Salário,RECEITA,Entrada recorrente mensal - salário base + VR + possível plantão
+2026-03-25,Quarta,PIX RECEBIDO (Salário/Pagamento),CREDIT,3149.53,Nubank,Renda,Salário,RECEITA,Entrada recorrente mensal - salário base + VR + possível plantão
+2026-04-25,Sábado,PIX RECEBIDO (Salário/Pagamento),CREDIT,3081.22,Caixa Econômica Federal,Renda,Salário,RECEITA,Entrada recorrente mensal - salário base + VR + possível plantão
+2026-05-25,Domingo,PIX RECEBIDO (Salário/Pagamento),CREDIT,298.38,Nubank,Renda,Salário,RECEITA,Mês em andamento - pode ser parcial ou adiantamento
+RESUMO_SALARIOS,,,,,,,,," "
+TOTAL_RECEBIDO_PERIODO,,,,38352.48,,,,,Soma de todas as entradas de salário identificadas
+MEDIA_MENSAL,,,,2739.46,,,,,Média mensal das entradas de salário
+MAIOR_ENTRADA,,,,3500.00,,,,,Jan/2026
+MENOR_ENTRADA,,,,298.38,,,,,Mai/2026 (mês incompleto)
+TOTAL_MESES_REGISTRADOS,,,,14,,,,,Abr/2025 a Mai/2026

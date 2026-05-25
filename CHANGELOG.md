@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## [Unreleased] — 2026-05-25 (TypeScript & Compound Parser)
+
+### Added
+- **`csv-parser.ts`** — Adicionado o utilitário `extractCompoundAmounts` para processar e quebrar valores compostos (por exemplo, `"7986,44 saídas / 3502,62 entradas"`) usando a barra `/`.
+- **`csv-parser.ts`** — `resolveAmount` atualizado para retornar um array de transações resolvidas. O loop principal do parser agora cria múltiplas transações a partir de uma única linha composta.
+- **`types/index.ts`** — Adicionado o campo `suffix?: string` em `ResolvedAmount` para diferenciar transações duplicadas adicionando ` (entradas)` e ` (saídas)`.
+
+### Fixed
+- **`globals.d.ts`** — Resolvido erro de compilação do TypeScript `Declaration or statement expected` movendo as declarações de escopo e adicionando a palavra-chave `declare` para as constantes globais `echarts` e `lucide`.
+- **`app.ts`** — Removido import não utilizado `ImportRecord` para sanar o erro `TS6196` na build.
+- **`csv-parser.ts`** — Adicionado `'fatura cartao'` e `'fatura cartão'` em `SKIP_MOV_TYPES` para impedir dupla contagem de gastos do cartão no extrato.
+
+### Build / Testes
+- ✅ Build: OK (`tsc --noEmit && vite build` concluído com sucesso e 0 erros).
+- ✅ Servidor: Rodando em `http://localhost:3000`.
+- N/A Cobertura de testes automatizados.
+
 ## [Unreleased] — 2026-05-22 (parser v2)
 
 ### Fixed
