@@ -1,0 +1,130 @@
+DATA,DESCRICAO,TIPO,CONTA,CATEGORIA_GERAL,SUBCATEGORIA,VALOR_R$,MOEDA,OCORRENCIAS,VALOR_MIN_R$,VALOR_MAX_R$,VALOR_MEDIO_R$,PARCELA,ESSENCIAL,RECORRENTE,TIPO_MOVIMENTACAO,OBSERVACOES
+2025-04-07,Pagamento efetuado|FACULDADES METROPOLITANAS UNIDAS EDUCACIONAIS LTDA,DEBIT,Nubank,Educação,Universidade,"278,43",BRL,1,"278,43","278,43","278,43",,SIM,SIM,GASTO REAL,Mensalidade faculdade FMU
+2025-04-08,Compras diversas (múltiplas transações),DEBIT,Nubank/Caixa,Compras,Compras,"7154,06",BRL,297,"1,00","600,00","24,08",,NAO,NAO,GASTO REAL,297 transações de compras no período todo — categoria agrupada
+2025-04-09,Supermercado (múltiplas transações),DEBIT,Nubank/Caixa,Alimentação,Supermercado,"2169,33",BRL,71,"1,50","200,00","30,55",,SIM,SIM,GASTO REAL,71 idas ao supermercado no período
+2025-04-09,Serviços (múltiplas transações),DEBIT,Nubank/Caixa,Outros,Serviços,"5383,17",BRL,51,"1,79","983,63","105,55",,NAO,NAO,GASTO REAL,51 transações de serviços gerais
+2025-04-10,Nubank — Fatura venc. 10/04/2025 (período 03/03 a 03/04/2025),DEBIT,Nubank,Finanças,Pagamento de fatura,"86,40",BRL,1,"86,40","86,40","86,40",,SIM,SIM,FATURA CARTAO,Fatura oficial Nubank — valor confirmado pelo provedor
+2025-04-13,Dm *Spotify,DEBIT,Nubank,Serviços digitais,Serviços digitais,"11,90",BRL,1,"11,90","11,90","11,90",,NAO,SIM,GASTO REAL,Assinatura Spotify
+2025-04-27,Transferência enviada|INSTITUTO EDUCAR BRASIL PROGRAMAS EDUCAC,DEBIT,Nubank,Educação,Educação,"375,22",BRL,1,"375,22","375,22","375,22",,SIM,NAO,GASTO REAL,Programa Educa Mais Brasil — pagamento avulso
+2025-05-03,Compras — continuação,DEBIT,Nubank/Caixa,Compras,Compras,(incluído acima),BRL,—,—,—,—,,NAO,NAO,GASTO REAL,Veja linha de Compras acima
+2025-05-06,Pagamento de fatura (Nubank → fatura anterior),DEBIT,Nubank,Finanças,Pagamento de fatura,(variável),BRL,18,—,—,—,,SIM,SIM,TRANSFERENCIA INTERNA,Pagamentos de fatura do cartão — realocação interna," NÃO é despesa nova"
+2025-05-06,Pagamento recebido (fatura paga na conta cartão),CREDIT,Nubank,Finanças,Pagamento de fatura,(variável),BRL,24,—,—,—,,SIM,SIM,TRANSFERENCIA INTERNA,Reflexo do pagamento na conta do cartão
+2025-05-10,Postos de gasolina (múltiplas transações),DEBIT,Nubank/Caixa,Transporte,Postos de gasolina,"717,49",BRL,26,"6,00","60,00","27,59",,SIM,SIM,GASTO REAL,26 abastecimentos no período todo
+2025-05-11,Restaurantes bares e lanchonetes (múltiplas transações),DEBIT,Nubank/Caixa,Alimentação,Restaurantes bares e lanchonetes,"2476,48",BRL,56,"1,50","223,96","44,22",,NAO,NAO,GASTO REAL,56 refeições fora de casa no período
+2025-05-12,Nubank — Fatura venc. 12/05/2025 (período 03/04 a 03/05/2025),DEBIT,Nubank,Finanças,Pagamento de fatura,"189,84",BRL,1,"189,84","189,84","189,84",,SIM,SIM,FATURA CARTAO,Fatura oficial Nubank — valor confirmado pelo provedor
+2025-05-13,Ebn *Spotify,DEBIT,Nubank,Serviços digitais,Serviços digitais,"21,90",BRL,1,"21,90","21,90","21,90",,NAO,SIM,GASTO REAL,Assinatura Spotify
+2025-06-07,Educa Mais Brasil 1/6,DEBIT,Nubank,Educação,Educação,"100,09",BRL,1,"100,09","100,09","100,09",1/6,SIM,SIM,GASTO REAL,Parcela 1 de 6 — Educa Mais Brasil
+2025-06-09,Transferência enviada|OKTO TECH LTDA.,DEBIT,Nubank,Serviços digitais,Serviços digitais,"16,98",BRL,1,"16,98","16,98","16,98",,NAO,NAO,GASTO REAL,Serviço digital avulso
+2025-06-10,Transferência enviada|TELEFONICA BRASIL S A,DEBIT,Nubank,Moradia,Telecomunicação,"53,00",BRL,1,"53,00","53,00","53,00",,SIM,SIM,GASTO REAL,Conta Vivo — Junho 2025
+2025-06-10,Nubank — Fatura venc. 10/06/2025 (período 03/05 a 03/06/2025),DEBIT,Nubank,Finanças,Pagamento de fatura,"223,08",BRL,1,"223,08","223,08","223,08",,SIM,SIM,FATURA CARTAO,Fatura oficial Nubank — valor confirmado pelo provedor
+2025-06-14,Transferência enviada|Lucas Leonel de Almeida → Caixa,DEBIT,Nubank,Finanças,Transferências próprias,(variável),BRL,21,—,"3151,22",—,,—,SIM,TRANSFERENCIA INTERNA,Transferências entre suas próprias contas (Nubank → Caixa) — NÃO é despesa
+2025-06-14,PIX RECEBIDO (Nubank → Caixa — mesma titularidade),CREDIT,Caixa Econômica Federal,Finanças,Transferências próprias,(variável),BRL,20,—,—,—,,—,SIM,TRANSFERENCIA INTERNA,Reflexo na Caixa das transferências enviadas pelo Nubank — NÃO é receita
+2025-06-16,Microsoft*Store,DEBIT,Nubank,Serviços digitais,Serviços digitais,"99,00",BRL,1,"99,00","99,00","99,00",,NAO,NAO,GASTO REAL,Microsoft Store — compra avulsa
+2025-06-25,Transferência - PIX (saídas/entradas terceiros),DEBIT/CREDIT,Nubank/Caixa,Finanças,Transferência - PIX,"7986,44 saídas / 3502,62 entradas",BRL,46,"2,62","3500,00","249,76",,NAO,NAO,GASTO REAL / RECEITA,PIX para terceiros (46 movimentações) — entradas e saídas reais com pessoas/empresas externas
+2025-07-01,Transferência enviada|BYTEDANCE BRASIL TECNOLOGIA LTDA.,DEBIT,Nubank,Moradia,Internet,"254,83",BRL,6,"14,77","80,98","42,47",,NAO,SIM,GASTO REAL,ByteDance/TikTok — serviços internet (6 pagamentos acumulados)
+2025-07-04,Transferência enviada|NUVEI DO BRASIL INSTITUICAO DE PAGAMENTO LTDA.,DEBIT,Nubank,Serviços digitais,Serviços digitais,"5,99",BRL,1,"5,99","5,99","5,99",,NAO,NAO,GASTO REAL,Serviço digital avulso
+2025-07-07,Educa Mais Brasil 2/6,DEBIT,Nubank,Educação,Educação,"100,05",BRL,1,"100,05","100,05","100,05",2/6,SIM,SIM,GASTO REAL,Parcela 2 de 6 — Educa Mais Brasil
+2025-07-10,Nubank — Fatura venc. 10/07/2025 (período 03/06 a 03/07/2025),DEBIT,Nubank,Finanças,Pagamento de fatura,"233,20",BRL,1,"233,20","233,20","233,20",,SIM,SIM,FATURA CARTAO,Fatura oficial Nubank — valor confirmado pelo provedor
+2025-07-11,PIX ENVIADO (Caixa → Nubank — mesma titularidade),DEBIT,Caixa Econômica Federal,Finanças,Transferências próprias,(variável),BRL,74,—,—,—,,—,SIM,TRANSFERENCIA INTERNA,PIX enviados pela Caixa (maioria para próprio Nubank) — NÃO é despesa
+2025-07-11,Transferência Recebida|LUCAS LEONEL DE ALMEIDA,CREDIT,Nubank,Finanças,Transferências próprias,(variável),BRL,70,—,—,—,,—,SIM,TRANSFERENCIA INTERNA,PIX recebidos pelo Nubank (maioria da Caixa — mesma titularidade) — NÃO é receita
+2025-07-14,Dm *Spotify,DEBIT,Nubank,Serviços digitais,Serviços digitais,"11,90",BRL,1,"11,90","11,90","11,90",,NAO,SIM,GASTO REAL,Assinatura Spotify
+2025-07-18,Transferência enviada|TELEFONICA BRAS,DEBIT,Nubank,Moradia,Telecomunicação,"54,00",BRL,1,"54,00","54,00","54,00",,SIM,SIM,GASTO REAL,Conta Vivo — Julho 2025
+2025-07-27,Aplicação em LCA,DEBIT,Nubank,Investimentos,LCA,"300,00",BRL,1,"300,00","300,00","300,00",,SIM,NAO,INVESTIMENTO PROPRIO,Aplicação em LCA — NÃO é despesa," é investimento seu"
+2025-07-28,Dl*Alipay Alipay 1/2,DEBIT,Nubank,Serviços digitais,Serviços digitais,"81,25",BRL,1,"81,25","81,25","81,25",1/2,NAO,NAO,GASTO REAL,Alipay parcela 1 de 2
+2025-07-31,Aplicação em Tesouro Direto,DEBIT,Nubank,Investimentos,Tesouro Direto,(variável),BRL,3,—,—,—,,SIM,SIM,INVESTIMENTO PROPRIO,3 aplicações em Tesouro Direto (jul/2025 a jan/2026) — NÃO é despesa
+2025-07-31,Compra de criptomoedas,DEBIT,Nubank,Investimentos,Criptomoedas,"1,41",BRL,1,"1,41","1,41","1,41",,NAO,NAO,INVESTIMENTO PROPRIO,Compra simbólica de cripto — NÃO é despesa
+2025-08-03,Alimentos e bebidas — PIX ENVIADO (múltiplos),DEBIT,Caixa Econômica Federal,Alimentação,Alimentos e bebidas,"1355,30",BRL,22,"2,00","500,00","61,60",,SIM,SIM,GASTO REAL,22 pagamentos de alimentação via PIX pela Caixa (ago/2025 a mai/2026)
+2025-08-07,Educa Mais Brasil 3/6,DEBIT,Nubank,Educação,Educação,"100,05",BRL,1,"100,05","100,05","100,05",3/6,SIM,SIM,GASTO REAL,Parcela 3 de 6 — Educa Mais Brasil
+2025-08-08,PIX ENVIADO — Universidade (Caixa),DEBIT,Caixa Econômica Federal,Educação,Universidade,"3318,05",BRL,4,"331,24","1601,39","829,51",,SIM,SIM,GASTO REAL,4 pagamentos de faculdade via PIX pela Caixa (ago/2025 a abr/2026)
+2025-08-11,Nubank — Fatura venc. 11/08/2025 (período 03/07 a 03/08/2025),DEBIT,Nubank,Finanças,Pagamento de fatura,"263,08",BRL,1,"263,08","263,08","263,08",,SIM,SIM,FATURA CARTAO,Fatura oficial Nubank — valor confirmado pelo provedor
+2025-08-12,Transferência enviada|Amazon Serviços de Varejo do Brasil LTDA. (1),DEBIT,Nubank,Compras,Livraria,"189,00",BRL,1,"189,00","189,00","189,00",,NAO,NAO,GASTO REAL,Amazon — livro ou produto (agosto 2025)
+2025-08-13,Transferência enviada|Amazon Serviços de Varejo do Brasil LTDA. (2),DEBIT,Nubank,Compras,Livraria,"188,10",BRL,1,"188,10","188,10","188,10",,NAO,NAO,GASTO REAL,Amazon — livro ou produto (agosto 2025)
+2025-08-14,Dm*Spotify,DEBIT,Nubank,Serviços digitais,Serviços digitais,"11,90",BRL,1,"11,90","11,90","11,90",,NAO,SIM,GASTO REAL,Assinatura Spotify
+2025-08-19,PIX ENVIADO — Telecomunicação (Caixa),DEBIT,Caixa Econômica Federal,Moradia,Telecomunicação,"574,16",BRL,7,"54,00","245,00","82,02",,SIM,SIM,GASTO REAL,7 pagamentos de telecom via PIX (ago/2025 a mar/2026) — inclui Vivo e outros
+2025-08-20,55181669raulde (Livraria),DEBIT,Nubank,Compras,Livraria,"9,00",BRL,2,"3,75","5,25","4,50",,NAO,NAO,GASTO REAL,Compra de livros — valores pequenos
+2025-08-25,PIX ENVIADO — Alimentos (Caixa),DEBIT,Caixa Econômica Federal,Alimentação,Alimentos e bebidas,(incluído acima — set/ago),BRL,—,—,—,—,,SIM,SIM,GASTO REAL,Pagamentos de alimentação via PIX
+2025-08-28,Dl*Alipay Alipay 2/2,DEBIT,Nubank,Serviços digitais,Serviços digitais,"81,25",BRL,1,"81,25","81,25","81,25",2/2,NAO,NAO,GASTO REAL,Alipay parcela 2 de 2
+2025-09-07,Educa Mais Brasil 4/6,DEBIT,Nubank,Educação,Educação,"100,05",BRL,1,"100,05","100,05","100,05",4/6,SIM,SIM,GASTO REAL,Parcela 4 de 6 — Educa Mais Brasil
+2025-09-10,Nubank — Fatura venc. 10/09/2025 (período 03/08 a 03/09/2025),DEBIT,Nubank,Finanças,Pagamento de fatura,"357,75",BRL,1,"357,75","357,75","357,75",,SIM,SIM,FATURA CARTAO,Fatura oficial Nubank — valor confirmado pelo provedor
+2025-09-14,Dm*Spotify,DEBIT,Nubank,Serviços digitais,Serviços digitais,"12,90",BRL,1,"12,90","12,90","12,90",,NAO,SIM,GASTO REAL,Assinatura Spotify
+2025-10-03,Pagamento efetuado|FACULDADES METROPOLITANAS UNIDAS EDUCACIONAIS LTDA,DEBIT,Nubank,Educação,Universidade,"531,24",BRL,1,"531,24","531,24","531,24",,SIM,SIM,GASTO REAL,Mensalidade faculdade FMU — outubro 2025
+2025-10-07,Educa Mais Brasil 5/6,DEBIT,Nubank,Educação,Educação,"100,05",BRL,1,"100,05","100,05","100,05",5/6,SIM,SIM,GASTO REAL,Parcela 5 de 6 — Educa Mais Brasil
+2025-10-10,Transferência enviada|TELEFONICA BRASIL S.A.,DEBIT,Nubank,Moradia,Telecomunicação,"54,00",BRL,1,"54,00","54,00","54,00",,SIM,SIM,GASTO REAL,Conta Vivo — Outubro 2025
+2025-10-10,Nubank — Fatura venc. 10/10/2025 (período 03/09 a 03/10/2025),DEBIT,Nubank,Finanças,Pagamento de fatura,"578,23",BRL,1,"578,23","578,23","578,23",,SIM,SIM,FATURA CARTAO,Fatura oficial Nubank — valor confirmado pelo provedor
+2025-10-13,Resgate RDB,CREDIT,Nubank,Investimentos,RDB,"174,58",BRL,2,—,—,—,,SIM,NAO,INVESTIMENTO PROPRIO,Resgate de RDB — retorno à conta corrente," NÃO é receita de terceiros"
+2025-10-13,Aplicação RDB,DEBIT,Nubank,Investimentos,RDB,"162,30",BRL,2,—,—,—,,SIM,NAO,INVESTIMENTO PROPRIO,Reaplicação em RDB — NÃO é despesa
+2025-10-27,PIX ENVIADO — Serviço digital (Caixa),DEBIT,Caixa Econômica Federal,Serviços digitais,Serviços digitais,"23,84",BRL,1,"23,84","23,84","23,84",,NAO,NAO,GASTO REAL,Serviço digital pago via Caixa
+2025-11-03,PAG BOLETO IBC — Faculdade (Caixa),DEBIT,Caixa Econômica Federal,Educação,Universidade,"1439,56",BRL,4,"295,13","522,65","359,89",,SIM,SIM,GASTO REAL,4 pagamentos de boleto da faculdade via Caixa (nov/2025 a abr/2026)
+2025-11-07,Educa Mais Brasil 6/6,DEBIT,Nubank,Educação,Educação,"100,05",BRL,1,"100,05","100,05","100,05",6/6,SIM,SIM,GASTO REAL,Parcela 6 de 6 — Educa Mais Brasil (quitado!)
+2025-11-09,Wolf Leonardo,DEBIT,Nubank,Saúde e bem-estar,Saúde,"10,00",BRL,1,"10,00","10,00","10,00",,SIM,NAO,GASTO REAL,Saúde — consulta ou exame
+2025-11-10,Nubank — Fatura venc. 10/11/2025 (período 03/10 a 03/11/2025),DEBIT,Nubank,Finanças,Pagamento de fatura,"253,00",BRL,1,"253,00","253,00","253,00",,SIM,SIM,FATURA CARTAO,Fatura oficial Nubank — valor confirmado pelo provedor
+2025-11-13,Br1*Cashbarber (Escola/Barbearia),DEBIT,Nubank,Educação,Escola,"75,00",BRL,1,"75,00","75,00","75,00",,NAO,SIM,GASTO REAL,Barbearia — novembro 2025
+2025-11-16,Demerge Bras*Help.Hbom,DEBIT,Nubank,Serviços digitais,Serviços digitais,"8,90",BRL,1,"8,90","8,90","8,90",,NAO,SIM,GASTO REAL,HBO Max — cobrança avulsa
+2025-11-21,PIX ENVIADO — Vestuário (Caixa),DEBIT,Caixa Econômica Federal,Compras,Vestuário,"250,00",BRL,1,"250,00","250,00","250,00",,NAO,NAO,GASTO REAL,Compra de roupa — novembro 2025
+2025-12-03,Serviços automotivos (múltiplas transações),DEBIT,Nubank/Caixa,Transporte,Serviços automotivos,"880,00",BRL,27,"20,00","50,00","32,59",,SIM,SIM,GASTO REAL,27 pagamentos de serviços para o carro (dez/2025 a mai/2026)
+2025-12-05,Pag*Steam 1/2,DEBIT,Nubank,Lazer e entretenimento,Lazer,"57,24",BRL,1,"57,24","57,24","57,24",1/2,NAO,NAO,GASTO REAL,Steam — jogo parcelado (parcela 1 de 2)
+2025-12-10,Nubank — Fatura venc. 10/12/2025 (período 03/11 a 03/12/2025),DEBIT,Nubank,Finanças,Pagamento de fatura,"121,80",BRL,1,"121,80","121,80","121,80",,SIM,SIM,FATURA CARTAO,Fatura oficial Nubank — valor confirmado pelo provedor
+2025-12-11,Transferência Recebida|NURIA QUINA MONTEIRO BAIONE,CREDIT,Nubank,Finanças,Transferência - PIX,"200,00",BRL,1,"200,00","200,00","200,00",,NAO,NAO,RECEITA TERCEIROS,PIX recebido de terceiro (Nuria) — receita real
+2025-12-18,Dl*Google Dragon,DEBIT,Nubank,Serviços digitais,Serviços digitais,"17,59",BRL,1,"17,59","17,59","17,59",,NAO,NAO,GASTO REAL,Google Play — compra de jogo/app
+2025-12-22,PIX ENVIADO — Lazer (Caixa),DEBIT,Caixa Econômica Federal,Lazer e entretenimento,Lazer,(variável — parte do total),BRL,1,—,"332,98",—,,NAO,NAO,GASTO REAL,Lazer/entretenimento via Caixa
+2025-12-26,PIX ENVIADO — Internet (Caixa),DEBIT,Caixa Econômica Federal,Moradia,Internet,"228,64",BRL,7,"11,00","69,09","32,65",,SIM,SIM,GASTO REAL,7 pagamentos de internet via Caixa (dez/2025 a mai/2026)
+2025-12-29,Pag*Steam 2/2,DEBIT,Nubank,Lazer e entretenimento,Lazer,"19,23",BRL,1,"19,23","19,23","19,23",2/2,NAO,NAO,GASTO REAL,Steam — jogo parcelado (parcela 2 de 2 — quitado!)
+2026-01-05,Pag*Steam 1/2 (jogo 2),DEBIT,Nubank,Lazer e entretenimento,Lazer,"19,25",BRL,1,"19,25","19,25","19,25",1/2,NAO,NAO,GASTO REAL,Steam — novo jogo parcela 1 de 2
+2026-01-08,Educa Mais Brasil 1/3,DEBIT,Nubank,Educação,Educação,"178,14",BRL,1,"178,14","178,14","178,14",1/3,SIM,SIM,GASTO REAL,Nova série Educa Mais Brasil — parcela 1 de 3
+2026-01-12,Nubank — Fatura venc. 12/01/2026 (período 03/12 a 03/01/2026),DEBIT,Nubank,Finanças,Pagamento de fatura,"331,25",BRL,1,"331,25","331,25","331,25",,SIM,SIM,FATURA CARTAO,Fatura oficial Nubank — valor confirmado pelo provedor
+2026-01-13,Aplicação Fundo,DEBIT,Nubank,Investimentos,Fundo de investimento,"100,00",BRL,1,"100,00","100,00","100,00",,SIM,NAO,INVESTIMENTO PROPRIO,Aplicação em fundo — NÃO é despesa
+2026-01-24,Google Hbo Max Stream,DEBIT,Nubank,Serviços digitais,Serviços digitais,"29,90",BRL,1,"29,90","29,90","29,90",,NAO,SIM,GASTO REAL,HBO Max — janeiro 2026
+2026-01-30,Netflix.Com,DEBIT,Nubank,Serviços digitais,Serviços digitais,"20,90",BRL,1,"20,90","20,90","20,90",,NAO,SIM,GASTO REAL,Netflix — janeiro 2026
+2026-02-08,Educa Mais Brasil 2/3,DEBIT,Nubank,Educação,Educação,"178,12",BRL,1,"178,12","178,12","178,12",2/3,SIM,SIM,GASTO REAL,Nova série Educa Mais Brasil — parcela 2 de 3
+2026-02-10,Nubank — Fatura venc. 10/02/2026 (período 03/01 a 03/02/2026),DEBIT,Nubank,Finanças,Pagamento de fatura,"304,76",BRL,1,"304,76","304,76","304,76",,SIM,SIM,FATURA CARTAO,Fatura oficial Nubank — valor confirmado pelo provedor
+2026-02-11,Ebn *Tiktok Shop 1/2,DEBIT,Nubank,Serviços digitais,Serviços digitais,"184,25",BRL,1,"184,25","184,25","184,25",1/2,NAO,NAO,GASTO REAL,TikTok Shop — parcela 1 de 2
+2026-02-13,Br1*Cashbarber (Barbearia),DEBIT,Nubank,Educação,Escola,"75,00",BRL,1,"75,00","75,00","75,00",,NAO,SIM,GASTO REAL,Barbearia — fevereiro 2026
+2026-02-22,Dl*Google Hbo Ma,DEBIT,Nubank,Serviços digitais,Serviços digitais,"29,90",BRL,1,"29,90","29,90","29,90",,NAO,SIM,GASTO REAL,HBO Max — fevereiro 2026
+2026-02-23,PIX ENVIADO — Educação (Caixa),DEBIT,Caixa Econômica Federal,Educação,Educação,"767,90",BRL,1,"767,90","767,90","767,90",,SIM,NAO,GASTO REAL,Pagamento de educação de alto valor via Caixa
+2026-02-28,PIX ENVIADO — Saúde (Caixa),DEBIT,Caixa Econômica Federal,Saúde e bem-estar,Saúde,"75,00",BRL,1,"75,00","75,00","75,00",,SIM,NAO,GASTO REAL,Saúde — consulta ou exame
+2026-03-02,PIX ENVIADO — Livraria (Caixa),DEBIT,Caixa Econômica Federal,Compras,Livraria,"110,00",BRL,1,"110,00","110,00","110,00",,NAO,NAO,GASTO REAL,Compra de livro via Caixa
+2026-03-08,Educa Mais Brasil 3/3,DEBIT,Nubank,Educação,Educação,"178,12",BRL,1,"178,12","178,12","178,12",3/3,SIM,SIM,GASTO REAL,Nova série Educa Mais Brasil — parcela 3 de 3 (quitado!)
+2026-03-10,Nubank — Fatura venc. 10/03/2026 (período 03/02 a 03/03/2026),DEBIT,Nubank,Finanças,Pagamento de fatura,"575,22",BRL,1,"575,22","575,22","575,22",,SIM,SIM,FATURA CARTAO,Fatura oficial Nubank — valor confirmado pelo provedor
+2026-03-11,Ebn *Tiktok Shop 2/2,DEBIT,Nubank,Serviços digitais,Serviços digitais,"184,25",BRL,1,"184,25","184,25","184,25",2/2,NAO,NAO,GASTO REAL,TikTok Shop — parcela 2 de 2 (quitado!)
+2026-03-12,PIX ENVIADO — Telecomunicação (Caixa — último),DEBIT,Caixa Econômica Federal,Moradia,Telecomunicação,(incluído no total),BRL,—,—,—,—,,SIM,SIM,GASTO REAL,Último pagamento da série de telecom via Caixa
+2026-03-17,PIX ENVIADO — Lazer (Caixa — 2),DEBIT,Caixa Econômica Federal,Lazer e entretenimento,Lazer,"332,98",BRL,1,"332,98","332,98","332,98",,NAO,NAO,GASTO REAL,Lazer de alto valor — março 2026
+2026-03-20,PIX ENVIADO — Saúde (Caixa — 2),DEBIT,Caixa Econômica Federal,Saúde e bem-estar,Saúde,"231,88",BRL,1,"231,88","231,88","231,88",,SIM,NAO,GASTO REAL,Saúde — consulta ou procedimento maior
+2026-03-22,iFood,DEBIT,Nubank,Alimentação,Delivery de alimentos,"42,49",BRL,1,"42,49","42,49","42,49",,NAO,NAO,GASTO REAL,iFood — pedido março 2026
+2026-04-03,Nubank — Fatura venc. 03/04/2026 → venc. 10/04 (período 03/03 a 03/04/2026),DEBIT,Nubank,Finanças,Pagamento de fatura,"461,65",BRL,1,"461,65","461,65","461,65",,SIM,SIM,FATURA CARTAO,Fatura oficial Nubank — valor confirmado pelo provedor
+2026-04-08,PAG BOLETO IBC — Faculdade (Caixa — continuação),DEBIT,Caixa Econômica Federal,Educação,Universidade,(incluído no total),BRL,—,—,—,—,,SIM,SIM,GASTO REAL,Pagamento boleto faculdade via Caixa — abril 2026
+2026-04-10,Transferência Recebida|JOSE ROBERTO S DE ALMEIDA,CREDIT,Nubank,Finanças,Transferência - PIX,"106,00",BRL,1,"106,00","106,00","106,00",,NAO,NAO,RECEITA TERCEIROS,PIX recebido de terceiro (José Roberto) — receita real
+2026-04-14,Postos de gasolina — último registro,DEBIT,Nubank/Caixa,Transporte,Postos de gasolina,(incluído no total),BRL,—,—,—,—,,SIM,SIM,GASTO REAL,Abastecimento — abril 2026
+2026-04-22,Dl*Google Hbo Ma,DEBIT,Nubank,Serviços digitais,Serviços digitais,"29,90",BRL,1,"29,90","29,90","29,90",,NAO,SIM,GASTO REAL,HBO Max — abril 2026
+2026-04-30,PIX ENVIADO — Universidade (Caixa — mais recente),DEBIT,Caixa Econômica Federal,Educação,Universidade,"1601,39",BRL,1,"1601,39","1601,39","1601,39",,SIM,SIM,GASTO REAL,Pagamento faculdade via Caixa — maior valor registrado
+2026-04-30,Netflix Entretenimento,DEBIT,Nubank,Serviços digitais,Serviços digitais,"20,90",BRL,1,"20,90","20,90","20,90",,NAO,SIM,GASTO REAL,Netflix — abril 2026
+2026-05-03,Nubank — Fatura venc. 11/05/2026 (período 03/04 a 03/05/2026),DEBIT,Nubank,Finanças,Pagamento de fatura,"63,70",BRL,1,"63,70","63,70","63,70",,SIM,SIM,FATURA CARTAO,Fatura oficial Nubank — valor confirmado pelo provedor
+2026-05-04,PIX ENVIADO — Delivery (Caixa),DEBIT,Caixa Econômica Federal,Alimentação,Delivery de alimentos,"176,95",BRL,1,"176,95","176,95","176,95",,NAO,NAO,GASTO REAL,Delivery — maio 2026
+2026-05-05,PIX ENVIADO — Delivery (Caixa — 2),DEBIT,Caixa Econômica Federal,Alimentação,Delivery de alimentos,"214,84",BRL,2,"43,89","170,95","107,42",,NAO,NAO,GASTO REAL,Delivery — maio 2026
+2026-05-09,Transferência - PIX (saídas recentes),DEBIT,Nubank/Caixa,Finanças,Transferência - PIX,(incluído no total),BRL,—,—,—,—,,NAO,NAO,GASTO REAL / RECEITA,PIX para/de terceiros — continuação até mai/2026
+2026-05-12,Conta Vivo,DEBIT,Nubank,Moradia,Telecomunicação,"120,00",BRL,1,"120,00","120,00","120,00",,SIM,SIM,GASTO REAL,Conta Vivo — maio 2026 (valor maior que meses anteriores)
+2026-05-13,Transferência enviada|BYTEDANCE BRASIL TECNOLOGIA LTDA. (mais recente),DEBIT,Nubank,Moradia,Internet,(incluído no total),BRL,—,—,—,—,,NAO,SIM,GASTO REAL,ByteDance/TikTok — mai/2026
+2026-05-14,Transferência enviada|Lucas Leonel de Almeida → Caixa (mais recente),DEBIT,Nubank,Finanças,Transferências próprias,(variável),BRL,—,—,—,—,,—,SIM,TRANSFERENCIA INTERNA,Última transferência interna registrada — NÃO é despesa
+2026-05-18,PIX ENVIADO — Internet (Caixa — mais recente),DEBIT,Caixa Econômica Federal,Moradia,Internet,(incluído no total),BRL,—,—,—,—,,SIM,SIM,GASTO REAL,Pagamento de internet — mai/2026
+2026-05-19,Serviços automotivos (mais recentes),DEBIT,Nubank/Caixa,Transporte,Serviços automotivos,(incluído no total),BRL,—,—,—,—,,SIM,SIM,GASTO REAL,Serviços para o carro — mai/2026
+2026-05-19,PIX ENVIADO — Alimentos (Caixa — mais recente),DEBIT,Caixa Econômica Federal,Alimentação,Alimentos e bebidas,(incluído no total),BRL,—,—,—,—,,SIM,SIM,GASTO REAL,Alimentação via Caixa — mai/2026
+2026-05-20,Supermercado (mais recente),DEBIT,Nubank/Caixa,Alimentação,Supermercado,(incluído no total),BRL,—,—,—,—,,SIM,SIM,GASTO REAL,Última ida ao supermercado — mai/2026
+RESUMO CONSOLIDADO DO PERÍODO,,,,,,,,,,,,,,,,,
+INDICADOR,VALOR,OBSERVACAO,,,,,,,,,,,,,,,,,
+Total gasto (gastos reais),"R$ 45.795,33",Exclui transferências internas e investimentos próprios,,,,,,,,,,,,,,,,,
+Total recebido (receitas reais),"R$ 47.168,96",Inclui salários + PIX de terceiros + resgates,,,,,,,,,,,,,,,,,
+Saldo líquido,"R$ 1.373,62",Recebido menos gasto,,,,,,,,,,,,,,,,,
+Transferências internas (próprias),"R$ 85.833,96",NÃO é gasto nem receita — realocação entre suas contas,,,,,,,,,,,,,,,,,
+Investimentos próprios (aplicações),"R$ 1.800,01",Tesouro Direto + LCA + RDB + Fundo + Cripto,,,,,,,,,,,,,,,,,
+Resgates de investimentos,"R$ 174,58",RDB resgatado,,,,,,,,,,,,,,,,,
+Total faturas oficiais Nubank (14 faturas),"R$ 4.042,96",Faturas abr/2025 a mai/2026 — valores confirmados pelo banco,,,,,,,,,,,,,,,,,
+RANKING CATEGORIAS — MAIORES GASTOS DO PERÍODO,,,,,,,,,,,,,,,,,
+POSICAO,CATEGORIA,SUBCATEGORIA,TOTAL_R$,PARTICIPACAO,TRANSACOES,OBSERVACAO,,,,,,,,,,,,,
+1,Compras,Compras gerais + Livraria,"R$ 7.650,16","16,70%",302,Maior fatia — 297 transações de compras + 5 de livraria,,,,,,,,,,,,,
+2,Educação,Universidade + Educa Mais + Escola,"R$ 9.292,23","20,30%",29,Maior gasto absoluto — faculdade pesa muito,,,,,,,,,,,,,
+3,Alimentação,Restaurantes + Supermercado + Delivery + Alimentos,"R$ 6.435,39","14,05%",153,Bem distribuído entre as subcategorias,,,,,,,,,,,,,
+4,Outros,Serviços + Vestuário,"R$ 5.633,17","12,30%",52,Serviços diversos — categoria ampla,,,,,,,,,,,,,
+5,Transporte,Postos de gasolina + Serviços automotivos,"R$ 1.597,49","3,49%",53,Carro consome bastante no período,,,,,,,,,,,,,
+6,Moradia,Telecomunicação + Internet,"R$ 1.582,05","3,45%",29,Vivo + Internet — despesas fixas mensais,,,,,,,,,,,,,
+7,Serviços digitais,Spotify + Netflix + HBO + TikTok + outros,"R$ 983,09","2,15%",23,Assinaturas e serviços online,,,,,,,,,,,,,
+8,Lazer e entretenimento,Steam + PIX lazer,"R$ 628,61","1,37%",6,Entretenimento — baixo no geral,,,,,,,,,,,,,
+9,Saúde e bem-estar,Saúde,"R$ 316,88","0,69%",3,Poucos registros — possível subnotificação,,,,,,,,,,,,,

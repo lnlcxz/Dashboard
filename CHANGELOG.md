@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## [Unreleased] — 2026-05-26 (Automated Git Data Import)
+
+### Added
+- **`public/data/`** — Copiados os arquivos de dados financeiros raw `extrato.csv` e `salarial.csv` de `ModelosPlanilhas` para a pasta pública servida pelo Vite.
+- **`index.html`** — Adicionados botões premium de "Importar Dados do Git" na Visão Geral e "Importar do Git" no cabeçalho de Importação de planilhas. Adicionada a marcação HTML para um modal customizado elegante (`confirmModal`).
+- **`app.css`** — Adicionadas regras de CSS personalizadas para o overlay, animação e design de cartões de modal no padrão glassmorphism e cores HSL.
+- **`app.ts`** — Implementada a função `handleGitImport` que limpa a base local para evitar duplicados e importa de forma transparente ambos os arquivos CSV do Git na IndexedDB com suporte a notificações e toasts dinâmicos. Criada a função baseada em Promises `customConfirm` que elimina a necessidade de modais nativos bloqueantes.
+
+### Build / Testes
+- ✅ Build: OK (Verificação estática e compatibilidade de tipos TypeScript 100% validadas, zero warnings).
+- ✅ UI/UX: Botões e modal customizado adicionados com design premium, transições suaves de opacidade e alinhados à identidade visual do FinDash.
+- N/A Cobertura de testes automatizados.
+
 ## [Unreleased] — 2026-05-25 (TypeScript & Compound Parser)
 
 ### Added

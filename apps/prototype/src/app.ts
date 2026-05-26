@@ -570,6 +570,107 @@ function setupActions(): void {
     
     showToast('Log exportado!', 'success');
   });
+
+  document.getElementById('btnImportGitOverview')?.addEventListener('click', handleGitImport);
+  document.getElementById('btnImportGitImport')?.addEventListener('click', handleGitImport);
+}
+
+async function handleGitImport(): Promise<void> {
+  if (!await customConfirm()) {
+    return;
+  }
+
+  showToast('Limpando base de dados atual...', 'info');
+  await clearAllData();
+
+  showToast('Importando planilha salarial...', 'info');
+  try {
+    const salResponse = await fetch('/data/salarial.csv');
+    if (!salResponse.ok) throw new Error(`Não foi possível ler salarial.csv (Erro: ${salResponse.status})`);
+    const salText = await salResponse.text();
+    const salResult = parseCSV(salText);
+    if (salResult.status === 'rejected') {
+      throw new Error(salResult.reason || 'Planilha salarial rejeitada pelo parser.');
+    }
+    const salCategorized = applyCategories(salResult.transactions);
+    await addTransactions(salCategorized, {
+      fileName: 'planilha_completa___entradas_de_sal_rio__abr_2025_a_mai_2026_.csv',
+      total: salResult.total,
+      parsed: salResult.parsed,
+      errors: salResult.errors.length,
+      status: 'success',
+      errorDetails: salResult.errors,
+      metadata: {
+        modelName: salResult.modelName,
+        separator: salResult.separator,
+        headers: salResult.headers,
+        mapping: salResult.mapping
+      }
+    });
+    showToast(`Planilha salarial importada: ${salResult.parsed} transações`, 'success');
+  } catch (err) {
+    showToast(`Erro na importação salarial: ${err instanceof Error ? err.message : String(err)}`, 'error');
+    await loadData();
+    return;
+  }
+
+  showToast('Importando extrato bancário...', 'info');
+  try {
+    const extResponse = await fetch('/data/extrato.csv');
+    if (!extResponse.ok) throw new Error(`Não foi possível ler extrato.csv (Erro: ${extResponse.status})`);
+    const extText = await extResponse.text();
+    const extResult = parseCSV(extText);
+    if (extResult.status === 'rejected') {
+      throw new Error(extResult.reason || 'Extrato rejeitado pelo parser.');
+    }
+    const extCategorized = applyCategories(extResult.transactions);
+    await addTransactions(extCategorized, {
+      fileName: 'extrato_completo_lucas___2025_a_mai_2026.csv',
+      total: extResult.total,
+      parsed: extResult.parsed,
+      errors: extResult.errors.length,
+      status: 'success',
+      errorDetails: extResult.errors,
+      metadata: {
+        modelName: extResult.modelName,
+        separator: extResult.separator,
+        headers: extResult.headers,
+        mapping: extResult.mapping
+      }
+    });
+    showToast(`Extrato importado: ${extResult.parsed} transações`, 'success');
+  } catch (err) {
+    showToast(`Erro na importação do extrato: ${err instanceof Error ? err.message : String(err)}`, 'error');
+  }
+
+  showToast('Importação concluída com sucesso!', 'success');
+  await loadData();
+}
+
+function customConfirm(): Promise<boolean> {
+  return new Promise((resolve) => {
+    const modal = document.getElementById('confirmModal');
+    const okBtn = document.getElementById('confirmOk');
+    const cancelBtn = document.getElementById('confirmCancel');
+    if (!modal || !okBtn || !cancelBtn) {
+      resolve(false);
+      return;
+    }
+
+    const cleanup = (val: boolean) => {
+      modal.classList.remove('active');
+      okBtn.removeEventListener('click', onOk);
+      cancelBtn.removeEventListener('click', onCancel);
+      resolve(val);
+    };
+
+    const onOk = () => cleanup(true);
+    const onCancel = () => cleanup(false);
+
+    okBtn.addEventListener('click', onOk);
+    cancelBtn.addEventListener('click', onCancel);
+    modal.classList.add('active');
+  });
 }
 
 // ====== STORAGE COUNT ======

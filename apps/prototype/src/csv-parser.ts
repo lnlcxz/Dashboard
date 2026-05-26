@@ -28,10 +28,9 @@ const COL_MAP: Record<string, string[]> = {
 
 const SKIP_MOV_TYPES = new Set([
   'transferencia interna',
+  'transf interna',
   'investimento proprio',
-  'investimento próprio',
-  'fatura cartao',
-  'fatura cartão'
+  'fatura cartao'
 ]);
 
 function mapColumns(headers: string[]): ColMapping {
@@ -226,7 +225,14 @@ export function parseCSV(text: string): ParseResult {
         errors.push(`[LINHA ${i + 1}] Data inválida (valor: "${fields[mapping.date!]}").\n  ➔ LINHA ORIGINAL: ${lines[i]}`);
         continue;
       }
-      const movType = mapping._movType !== undefined ? (fields[mapping._movType] ?? '').toLowerCase().trim() : '';
+      const movType = mapping._movType !== undefined
+        ? (fields[mapping._movType] ?? '')
+            .toLowerCase()
+            .trim()
+            .replace(/_/g, ' ')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+        : '';
       if (SKIP_MOV_TYPES.has(movType)) continue;
       const category = mapping.category !== undefined ? fields[mapping.category] ?? '' : '';
       if (category.toLowerCase() === 'resumo') continue;
