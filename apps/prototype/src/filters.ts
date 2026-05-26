@@ -21,6 +21,9 @@ export function applyFilters(transactions: Transaction[], filters: FilterState):
   if (filters.type && filters.type !== 'all') {
     result = result.filter(tx => tx.type === filters.type);
   }
+  if (filters.accountId && filters.accountId !== 'all') {
+    result = result.filter(tx => tx.accountId === filters.accountId);
+  }
   if (filters.dateFrom) {
     const from = new Date(filters.dateFrom);
     from.setHours(0, 0, 0, 0);

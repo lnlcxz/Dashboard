@@ -21,17 +21,92 @@ let currentStats: ComputedStats = {
   totalIncome: 0, totalExpense: 0, balance: 0, savingsRate: 0, byCat: {}, byMonth: {}, transactionCount: 0
 };
 let currentPage = 1;
-let filters: FilterState = { search: '', category: 'all', type: 'all', dateFrom: '', dateTo: '', sortBy: 'date', sortDir: 'desc' };
+let filters: FilterState = { search: '', category: 'all', type: 'all', dateFrom: '', dateTo: '', sortBy: 'date', sortDir: 'desc', accountId: 'all' };
 
 // ====== INIT ======
 document.addEventListener('DOMContentLoaded', async () => {
   window.lucide?.createIcons();
+  loadUserInfo();
   setupNavigation();
   setupUpload();
   setupFilters();
   setupActions();
   await loadData();
 });
+
+// ====== USER PROFILE ======
+let currentUserProfile = {
+  name: 'Usuário',
+  email: 'usuario@findash.com',
+  accounts: [] as {id: string, name: string}[]
+};
+
+function loadUserInfo(): void {
+  const saved = localStorage.getItem('findash_user_profile');
+  if (saved) {
+    try {
+      currentUserProfile = JSON.parse(saved);
+    } catch (e) {
+      // legacy fallback
+      const oldName = localStorage.getItem('findash_username');
+      if (oldName) currentUserProfile.name = oldName;
+    }
+  } else {
+    // Show onboarding modal if not registered
+    const modal = document.getElementById('onboardingModal');
+    if (modal) modal.classList.add('active');
+  }
+
+  const { name, email, accounts } = currentUserProfile;
+  const firstName = name.split(' ')[0];
+  const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+
+  const elGreeting = document.getElementById('greetingName');
+  if (elGreeting) elGreeting.textContent = `Olá, ${firstName}!`;
+
+  const elSideName = document.getElementById('sidebarUserName');
+  if (elSideName) elSideName.textContent = name;
+  
+  const elSideEmail = document.querySelector('.user-email');
+  if (elSideEmail) elSideEmail.textContent = email;
+
+  const elSideAvatar = document.getElementById('sidebarUserAvatar');
+  if (elSideAvatar) elSideAvatar.textContent = initials;
+
+  const elWalletName = document.getElementById('walletUserName');
+  if (elWalletName) elWalletName.textContent = name.toUpperCase();
+
+  const inputName = document.getElementById('inputUserName') as HTMLInputElement;
+  if (inputName) inputName.value = name;
+  
+  const inputEmail = document.getElementById('inputUserEmail') as HTMLInputElement;
+  if (inputEmail) inputEmail.value = email;
+  
+  const inputAccounts = document.getElementById('inputUserAccounts') as HTMLInputElement;
+  if (inputAccounts) inputAccounts.value = accounts.map(a => a.name).join(', ');
+
+  // Update Selectors
+  populateAccountSelectors();
+}
+
+function populateAccountSelectors(): void {
+  const filterAcc = document.getElementById('filterAccount') as HTMLSelectElement;
+  const importAcc = document.getElementById('importAccountSelect') as HTMLSelectElement;
+  
+  if (filterAcc) {
+    filterAcc.innerHTML = '<option value="all">Total (Todas)</option>';
+    currentUserProfile.accounts.forEach(acc => {
+      filterAcc.innerHTML += `<option value="${acc.id}">${acc.name}</option>`;
+    });
+  }
+  
+  if (importAcc) {
+    importAcc.innerHTML = '<option value="">Geral (Sem conta específica)</option>';
+    currentUserProfile.accounts.forEach(acc => {
+      importAcc.innerHTML += `<option value="${acc.id}">${acc.name}</option>`;
+    });
+  }
+}
 
 // ====== NAVIGATION ======
 function setupNavigation(): void {
@@ -135,6 +210,12 @@ async function handleFile(file: File): Promise<void> {
     }
 
     const categorized = applyCategories(result.transactions);
+    
+    const importAccSelect = document.getElementById('importAccountSelect') as HTMLSelectElement;
+    const accountId = importAccSelect && importAccSelect.value ? importAccSelect.value : undefined;
+    if (accountId) {
+      categorized.forEach(tx => tx.accountId = accountId);
+    }
 
     await addTransactions(categorized, {
       fileName: file.name,
@@ -225,6 +306,12 @@ function setupFilters(): void {
     applyCurrentFilters();
   }, 250));
 
+  document.getElementById('filterAccount')?.addEventListener('change', (e: Event) => {
+    filters.accountId = (e.target as HTMLSelectElement).value;
+    currentPage = 1;
+    applyCurrentFilters();
+  });
+
   document.getElementById('filterCategory')?.addEventListener('change', (e: Event) => {
     filters.category = (e.target as HTMLSelectElement).value;
     currentPage = 1;
@@ -250,8 +337,9 @@ function setupFilters(): void {
   });
 
   document.getElementById('btnClearFilters')?.addEventListener('click', () => {
-    filters = { search: '', category: 'all', type: 'all', dateFrom: '', dateTo: '', sortBy: 'date', sortDir: 'desc' };
+    filters = { search: '', category: 'all', type: 'all', dateFrom: '', dateTo: '', sortBy: 'date', sortDir: 'desc', accountId: 'all' };
     (document.getElementById('filterSearch') as HTMLInputElement).value = '';
+    (document.getElementById('filterAccount') as HTMLSelectElement).value = 'all';
     (document.getElementById('filterCategory') as HTMLSelectElement).value = 'all';
     (document.getElementById('filterType') as HTMLSelectElement).value = 'all';
     (document.getElementById('filterDateFrom') as HTMLInputElement).value = '';
@@ -275,6 +363,9 @@ function setupFilters(): void {
 
 function applyCurrentFilters(): void {
   filteredTransactions = applyFilters(allTransactions, filters);
+  currentStats = computeStats(filteredTransactions);
+  updateKPIs();
+  updateCharts();
   renderTransactionTable();
   updateCategoryFilter();
 }
@@ -499,6 +590,53 @@ function updateAnalytics(): void {
 
 // ====== ACTIONS ======
 function setupActions(): void {
+  document.getElementById('btnSaveUser')?.addEventListener('click', () => {
+    const inputName = document.getElementById('inputUserName') as HTMLInputElement;
+    const inputEmail = document.getElementById('inputUserEmail') as HTMLInputElement;
+    const inputAccounts = document.getElementById('inputUserAccounts') as HTMLInputElement;
+    
+    if (inputName && inputName.value.trim()) {
+      const accountsList = inputAccounts.value.split(',').map(s => s.trim()).filter(s => s.length > 0);
+      const accountsObj = accountsList.map(name => ({ id: name.toLowerCase().replace(/\s+/g, '-'), name }));
+      
+      currentUserProfile = {
+        name: inputName.value.trim(),
+        email: inputEmail.value.trim() || 'usuario@findash.com',
+        accounts: accountsObj
+      };
+      
+      localStorage.setItem('findash_user_profile', JSON.stringify(currentUserProfile));
+      loadUserInfo();
+      showToast('Perfil atualizado com sucesso!', 'success');
+    }
+  });
+
+  document.getElementById('btnCompleteOnboarding')?.addEventListener('click', () => {
+    const obName = document.getElementById('onboardName') as HTMLInputElement;
+    const obEmail = document.getElementById('onboardEmail') as HTMLInputElement;
+    const obAccounts = document.getElementById('onboardAccounts') as HTMLInputElement;
+
+    if (!obName.value.trim()) {
+      showToast('Por favor, informe seu nome.', 'error');
+      return;
+    }
+    
+    const accountsList = obAccounts.value.split(',').map(s => s.trim()).filter(s => s.length > 0);
+    const accountsObj = accountsList.length > 0 ? accountsList.map(name => ({ id: name.toLowerCase().replace(/\s+/g, '-'), name })) : [{id: 'geral', name: 'Geral'}];
+    
+    currentUserProfile = {
+      name: obName.value.trim(),
+      email: obEmail.value.trim() || 'usuario@findash.com',
+      accounts: accountsObj
+    };
+    
+    localStorage.setItem('findash_user_profile', JSON.stringify(currentUserProfile));
+    
+    document.getElementById('onboardingModal')?.classList.remove('active');
+    loadUserInfo();
+    showToast('Cadastro concluído com sucesso!', 'success');
+  });
+
   document.getElementById('btnDownloadSample')?.addEventListener('click', downloadSampleCSV);
   document.getElementById('btnRefresh')?.addEventListener('click', loadData);
 

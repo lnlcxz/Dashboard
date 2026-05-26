@@ -35,28 +35,30 @@
       <a href="#overview" class="nav-item active" data-page="overview">
         <i data-lucide="layout-dashboard"></i><span>Visão Geral</span>
       </a>
-      <a href="#import" class="nav-item" data-page="import">
-        <i data-lucide="upload"></i><span>Importar CSV</span>
+      <a href="#analytics" class="nav-item" data-page="analytics">
+        <i data-lucide="bar-chart-3"></i><span>Análises</span>
       </a>
       <a href="#transactions" class="nav-item" data-page="transactions">
         <i data-lucide="list"></i><span>Transações</span>
       </a>
-      <a href="#analytics" class="nav-item" data-page="analytics">
-        <i data-lucide="bar-chart-3"></i><span>Análises</span>
-      </a>
       <a href="#recurring" class="nav-item" data-page="recurring">
         <i data-lucide="repeat"></i><span>Recorrências</span>
+      </a>
+      <a href="#import" class="nav-item" data-page="import">
+        <i data-lucide="upload"></i><span>Importar CSV</span>
       </a>
       <a href="#settings" class="nav-item" data-page="settings">
         <i data-lucide="settings"></i><span>Configurações</span>
       </a>
     </nav>
     <div class="sidebar-footer">
-      <div class="storage-info">
-        <i data-lucide="database"></i>
-        <span id="storageCount">0 transações</span>
+      <div class="user-profile">
+        <div class="user-avatar" id="sidebarUserAvatar">US</div>
+        <div class="user-info">
+          <span class="user-name" id="sidebarUserName">Usuário</span>
+          <span class="user-email">usuario@findash.com</span>
+        </div>
       </div>
-      <span class="version">FinDash v1.0.0</span>
     </div>
   </aside>
 
@@ -65,57 +67,100 @@
 
     <!-- ===== OVERVIEW ===== -->
     <section class="page active" id="page-overview">
-      <div class="page-header">
-        <h1 class="page-title">Visão Geral</h1>
+      <div class="overview-header">
+        <div>
+          <h1 class="greeting-title" id="greetingName">Olá, Usuário!</h1>
+          <p class="greeting-sub">Acompanhe suas finanças com facilidade.</p>
+        </div>
         <div class="header-actions">
-          <button class="btn btn-primary btn-sm" id="btnImportGitOverview"><i data-lucide="git-branch"></i> Importar Dados do Git</button>
-          <button class="btn btn-secondary btn-sm" id="btnRefresh"><i data-lucide="refresh-cw"></i> Atualizar</button>
+          <button class="btn btn-dark" id="btnImportGitOverview">Adicionar Transação</button>
+          <button class="btn btn-icon"><i data-lucide="more-horizontal"></i></button>
         </div>
       </div>
-      <div class="kpi-grid">
+
+      <div class="kpi-grid compact">
         <div class="kpi-card balance">
-          <div class="kpi-label"><i data-lucide="wallet"></i> Saldo Total</div>
+          <div class="kpi-label">Saldo Total</div>
           <div class="kpi-value" id="kpiBalance">R$ 0,00</div>
-          <div class="kpi-sub" id="kpiBalanceSub">Importe dados para começar</div>
-          <div class="kpi-icon balance"><i data-lucide="wallet"></i></div>
-          <div style="display:none" data-kpi-before></div>
-        </div>
-        <div class="kpi-card income">
-          <div class="kpi-label"><i data-lucide="trending-up"></i> Receitas</div>
-          <div class="kpi-value positive" id="kpiIncome">R$ 0,00</div>
-          <div class="kpi-sub" id="kpiIncomeSub">—</div>
-          <div class="kpi-icon income"><i data-lucide="trending-up"></i></div>
+          <div class="kpi-sub" id="kpiBalanceSub">Última semana <span class="trend up">+0.00%</span></div>
         </div>
         <div class="kpi-card expense">
-          <div class="kpi-label"><i data-lucide="trending-down"></i> Despesas</div>
-          <div class="kpi-value negative" id="kpiExpense">R$ 0,00</div>
-          <div class="kpi-sub" id="kpiExpenseSub">—</div>
-          <div class="kpi-icon expense"><i data-lucide="trending-down"></i></div>
+          <div class="kpi-label">Despesas</div>
+          <div class="kpi-value" id="kpiExpense">R$ 0,00</div>
+          <div class="kpi-sub" id="kpiExpenseSub">Última semana <span class="trend down">-0.00%</span></div>
         </div>
         <div class="kpi-card savings">
-          <div class="kpi-label"><i data-lucide="piggy-bank"></i> Economia</div>
+          <div class="kpi-label">Economia</div>
           <div class="kpi-value" id="kpiSavings">0%</div>
-          <div class="kpi-sub" id="kpiSavingsSub">Taxa de economia</div>
-          <div class="kpi-icon savings"><i data-lucide="piggy-bank"></i></div>
+          <div class="kpi-sub" id="kpiSavingsSub">Última semana <span class="trend up">+0.00%</span></div>
         </div>
       </div>
-      <div class="charts-grid">
-        <div class="card">
-          <div class="card-title">Receitas vs Despesas</div>
-          <div class="chart-container" id="chartLine"></div>
+
+      <div class="charts-grid-saas">
+        <!-- Wallet & Account Balance Box -->
+        <div class="wallet-balance-box">
+          <div class="card wallet-card">
+            <div class="card-header">
+              <span class="card-title-saas">Carteira</span>
+              <span class="card-meta">Cartões | 1 de 4</span>
+            </div>
+            <div class="credit-card">
+              <div class="cc-bg"></div>
+              <div class="cc-logo">VISA</div>
+              <div class="cc-number">**** **** 787* 0000</div>
+              <div class="cc-footer">
+                <div class="cc-holder">
+                  <div class="cc-label">Titular</div>
+                  <div class="cc-name" id="walletUserName">USUÁRIO</div>
+                </div>
+                <div class="cc-expires">05/26</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card balance-card">
+             <div class="card-title-saas" style="margin-bottom:16px;">Saldo da Conta</div>
+             <div class="chart-container" id="chartDoughnut" style="height: 180px; min-height: 180px;"></div>
+          </div>
         </div>
-        <div class="card">
-          <div class="card-title">Despesas por Categoria</div>
-          <div class="chart-container" id="chartDoughnut"></div>
+
+        <!-- Latest Transactions Box -->
+        <div class="card transactions-card" id="overviewRecent">
+          <div class="card-header">
+            <span class="card-title-saas">Últimas Transações</span>
+            <a href="#transactions" class="link-see-all">Ver todas</a>
+          </div>
+          <div class="table-wrap saas-list">
+            <table>
+              <tbody id="recentTableBody"><tr><td colspan="4" style="text-align:center;color:var(--text-tertiary);padding:40px">Nenhuma transação importada</td></tr></tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <div class="card" id="overviewRecent">
-        <div class="card-title">Transações Recentes</div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th></tr></thead>
-            <tbody id="recentTableBody"><tr><td colspan="4" style="text-align:center;color:var(--text-tertiary);padding:40px">Nenhuma transação importada</td></tr></tbody>
-          </table>
+
+      <div class="bottom-grid-saas">
+        <!-- Statistics Box -->
+        <div class="card statistics-card">
+          <div class="card-header">
+            <span class="card-title-saas">Estatísticas</span>
+            <div class="stats-tabs">
+              <span>1S</span><span>1M</span><span class="active">6M</span><span>1A</span><span>TD</span>
+            </div>
+          </div>
+          <div class="chart-container" id="chartLine" style="height: 250px; min-height: 250px;"></div>
+        </div>
+        
+        <!-- Quick Transfer Box -->
+        <div class="card quick-transfer-card">
+          <div class="card-header">
+            <span class="card-title-saas">Transferência Rápida</span>
+            <a href="#transactions" class="link-see-all">Ver todas</a>
+          </div>
+          <div class="transfer-cards">
+            <div class="tc-item"><div class="tc-icon" style="background:#4527a0;"></div>Enviar para Conta<br><strong>0,00 BRL</strong></div>
+            <div class="tc-item"><div class="tc-icon" style="background:#0ea5e9;"></div>Poupança<br><strong>0,00 BRL</strong></div>
+          </div>
+          <button class="btn btn-dark w-full mt-4">Começar →</button>
         </div>
       </div>
     </section>
@@ -128,6 +173,12 @@
           <button class="btn btn-primary btn-sm" id="btnImportGitImport"><i data-lucide="git-branch"></i> Importar do Git</button>
           <button class="btn btn-secondary btn-sm" id="btnDownloadSample"><i data-lucide="download"></i> Baixar Planilha Exemplo</button>
         </div>
+      </div>
+      <div style="margin-bottom: 16px;">
+        <label style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">Importar para a Conta/Cartão:</label>
+        <select class="select" id="importAccountSelect" style="display:block; margin-top: 8px; width: 100%; max-width: 300px;">
+          <option value="">Geral (Sem conta específica)</option>
+        </select>
       </div>
       <div class="upload-zone" id="uploadZone">
         <input type="file" accept=".csv,.txt,.xls,.xlsx" id="csvInput" class="upload-input">
@@ -159,17 +210,37 @@
         </div>
       </div>
       <div class="filter-bar">
-        <input type="text" class="input search-input" id="filterSearch" placeholder="Buscar por descrição, categoria...">
-        <select class="select" id="filterCategory"><option value="all">Todas as categorias</option></select>
-        <select class="select" id="filterType">
-          <option value="all">Todos os tipos</option>
-          <option value="income">Receitas</option>
-          <option value="expense">Despesas</option>
-        </select>
-        <input type="date" class="input" id="filterDateFrom" style="width:160px">
-        <input type="date" class="input" id="filterDateTo" style="width:160px">
-        <div class="filter-spacer"></div>
-        <button class="btn btn-secondary btn-sm" id="btnClearFilters"><i data-lucide="x"></i> Limpar</button>
+        <div class="form-group">
+          <label>Buscar Transação</label>
+          <input type="text" class="input search-input" id="filterSearch" placeholder="Descrição ou categoria...">
+        </div>
+        <div class="form-group">
+          <label>Conta</label>
+          <select class="select" id="filterAccount"><option value="all">Total (Todas)</option></select>
+        </div>
+        <div class="form-group">
+          <label>Categoria</label>
+          <select class="select" id="filterCategory"><option value="all">Todas</option></select>
+        </div>
+        <div class="form-group">
+          <label>Tipo</label>
+          <select class="select" id="filterType">
+            <option value="all">Todos</option>
+            <option value="income">Receitas (+)</option>
+            <option value="expense">Despesas (-)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Data Inicial</label>
+          <input type="date" class="input" id="filterDateFrom">
+        </div>
+        <div class="form-group">
+          <label>Data Final</label>
+          <input type="date" class="input" id="filterDateTo">
+        </div>
+        <div class="form-group" style="justify-content: flex-end;">
+          <button class="btn btn-secondary" id="btnClearFilters" style="height:40px;"><i data-lucide="x"></i> Limpar</button>
+        </div>
       </div>
       <div class="card" style="padding:0">
         <div class="table-wrap">
@@ -200,11 +271,13 @@
       </div>
       <div class="charts-grid" style="margin-bottom:28px">
         <div class="card">
-          <div class="card-title">Comparação Mensal</div>
-          <div class="chart-container" id="chartBar"></div>
+          <div class="card-title-saas" style="margin-bottom: 8px;">Comparação Mensal</div>
+          <p style="font-size:13px; color:var(--text-secondary); margin-bottom: 24px;">Análise visual entre suas receitas e despesas ao longo dos últimos meses. Útil para identificar padrões de economia.</p>
+          <div class="chart-container" id="chartBar" style="height: 300px;"></div>
         </div>
         <div class="card">
-          <div class="card-title">Top Categorias de Gasto</div>
+          <div class="card-title-saas" style="margin-bottom: 8px;">Top Categorias de Gasto</div>
+          <p style="font-size:13px; color:var(--text-secondary); margin-bottom: 24px;">Descubra para onde está indo a maior parte do seu dinheiro neste mês.</p>
           <div id="topCategoriesList" style="padding:8px 0"></div>
         </div>
       </div>
@@ -237,6 +310,68 @@
     <section class="page" id="page-settings">
       <div class="page-header">
         <h1 class="page-title">Configurações</h1>
+      </div>
+      <div class="card settings-section">
+        <h3>Perfil do Usuário</h3>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Nome de Exibição</div>
+            <div class="setting-desc">Como você será chamado no FinDash</div>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="inputUserName" class="input" placeholder="Seu nome">
+          </div>
+        </div>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">E-mail</div>
+            <div class="setting-desc">Endereço de e-mail do usuário</div>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <input type="email" id="inputUserEmail" class="input" placeholder="seu@email.com">
+          </div>
+        </div>
+        <div class="setting-row">
+          <div>
+            <div class="setting-label">Contas & Cartões</div>
+            <div class="setting-desc">Suas carteiras para filtrar transações (ex: Nubank, Caixa). Separe por vírgula.</div>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="inputUserAccounts" class="input" placeholder="Nubank, Caixa, Itaú...">
+          </div>
+
+<!-- ===== REGISTRATION ONBOARDING MODAL ===== -->
+<div class="modal-overlay" id="onboardingModal" style="background: rgba(8, 11, 20, 0.95); backdrop-filter: blur(12px);">
+  <div class="modal-content" style="max-width: 420px;">
+    <div class="modal-header" style="flex-direction: column; text-align: center; gap: 8px; margin-bottom: 24px;">
+      <div class="modal-icon" style="margin: 0 auto; width: 64px; height: 64px; border-radius: 50%; font-size: 32px;"><i data-lucide="user-plus"></i></div>
+      <h3 class="modal-title" style="font-size: 24px;">Bem-vindo ao FinDash!</h3>
+      <p style="color: var(--text-secondary); font-size: 13px;">Precisamos de algumas informações para personalizar seu painel e configurar suas carteiras.</p>
+    </div>
+    <div class="modal-body" style="margin-bottom: 24px;">
+      <div class="form-group" style="margin-bottom: 16px;">
+        <label>Nome Completo</label>
+        <input type="text" id="onboardName" class="input" placeholder="Ex: Lucas Leonel">
+      </div>
+      <div class="form-group" style="margin-bottom: 16px;">
+        <label>E-mail</label>
+        <input type="email" id="onboardEmail" class="input" placeholder="Ex: lucas@email.com">
+      </div>
+      <div class="form-group">
+        <label>Contas & Cartões</label>
+        <input type="text" id="onboardAccounts" class="input" placeholder="Ex: Nubank, Caixa, Itaú...">
+        <span style="font-size: 11px; color: var(--text-tertiary); margin-top: 4px;">Separe os nomes por vírgula. Estas serão suas carteiras para filtro.</span>
+      </div>
+    </div>
+    <div class="modal-actions" style="justify-content: center;">
+      <button class="btn btn-primary" id="btnCompleteOnboarding" style="width: 100%; height: 44px; font-size: 14px;">Concluir Cadastro</button>
+    </div>
+  </div>
+</div>
+        </div>
+        <div class="setting-row" style="justify-content: flex-end;">
+            <button class="btn btn-primary" id="btnSaveUser">Salvar Perfil</button>
+        </div>
       </div>
       <div class="card settings-section">
         <h3>Dados</h3>

@@ -19,6 +19,18 @@ export interface Transaction {
   type: TransactionType;
   merchant: string;
   importId?: string;
+  accountId?: string;
+}
+
+export interface UserAccount {
+  id: string;
+  name: string;
+}
+
+export interface UserProfile {
+  name: string;
+  email: string;
+  accounts: UserAccount[];
 }
 
 export interface CategoryRule {
@@ -80,6 +92,7 @@ export interface FilterState {
   dateTo: string;
   sortBy: string;
   sortDir: SortDir;
+  accountId: string;
 }
 
 export interface MonthBucket {

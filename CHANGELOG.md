@@ -1,5 +1,53 @@
 # CHANGELOG
 
+## [Unreleased] — 2026-05-26 (SaaS Light Theme Redesign)
+
+### Added
+- **`app.ts`, `index.html` e `types/index.ts`** — Implementado **Perfil de Usuário Completo** e **Gestão de Contas/Cartões**:
+  - Tela de Configurações agora possui campos para *Nome*, *E-mail* e *Contas & Cartões* (ex: Nubank, Caixa).
+  - Adicionado suporte nativo a `accountId` nas transações (`Transaction`).
+  - **Filtro de Contas**: Usuário agora pode filtrar todas as transações, gráficos e KPIs do Dashboard por contas específicas (Caixa, Nubank, ou Total).
+  - **Vínculo na Importação**: No momento de importar uma planilha CSV/Excel, o usuário agora tem um `select` para escolher em qual Conta/Cartão aqueles dados deverão ser salvos.
+- **`style.css`** — Reversão estética para **SaaS Dark Glassmorphism**. Após testes, o tema totalmente branco gerou conflito com a base e não agradou. Os componentes estruturais do design bancário ("SaaS") foram mantidos, mas agora possuem fundos translúcidos (`rgba(20, 25, 40, 0.4)`), bordas suaves (`rgba(255,255,255,0.08)`) e efeito `backdrop-filter: blur(16px)`, criando uma interface premium e coesa.
+- **`style.css` & `index.html`** — Melhorias Didáticas e de UI/UX (Acessibilidade Visual):
+  - **Transações**: Filtros agora estão agrupados em `form-group` com `<label>` explícitas (ex: "Buscar Transação", "Data Inicial") para que o usuário não dependa apenas do placeholder.
+  - **Análises**: Adição de descrições textuais explicativas abaixo dos títulos dos gráficos, informando ao usuário *o que* aquele gráfico representa.
+  - **Configurações**: Implementado o CSS da classe `.setting-row` e `.setting-label` (que antes estavam ausentes), estruturando corretamente os blocos de configuração com alinhamento flex e textos legíveis de alto contraste.
+- **`app.ts` e `index.html`** — Adicionado suporte a Nome de Usuário dinâmico. O usuário pode agora definir seu nome na aba Configurações. O nome é persistido via `localStorage` e atualiza automaticamente a saudação inicial ("Olá, [Nome]!"), o perfil na sidebar e o nome impresso no cartão de crédito virtual.
+- **`index.html`** — Tradução completa da interface do tema SaaS de Inglês para Português (PT-BR), englobando menus laterais, labels de KPIs, tabelas e rodapés de gráficos.
+- **`index.html`** — Atualização estrutural da seção "Visão Geral" (Overview). Inserção do cabeçalho de saudação, cards KPI compactos com tendências, painel da "Carteira" com simulação de cartão de crédito VISA, reformulação da seção de "Últimas Transações" para o formato de lista limpa (sem cabeçalhos), e box "Transferência Rápida".
+- **`charts.ts`** — Cores e configurações do ECharts ajustadas para o novo tema light/dark. Gráfico combinado (Bar e Line) utiliza agora os novos tons de roxo, tooltip adaptada e estilo minimalista de eixos.
+
+### Build / Testes
+- ✅ Build: Validada estruturação e estilos. O layout de cards transparentes não quebrou os gráficos.
+- ✅ UX: As descrições em tela agora guiam melhor o usuário sobre o que cada campo faz.
+- ✅ Dados: Fluxo de Importação modificado para incluir `accountId` no processo sem quebrar importações de versões legadas.
+
+### Added
+- **`style.css`** — Reversão estética para **SaaS Dark Glassmorphism**. Após testes, o tema totalmente branco gerou conflito com a base e não agradou. Os componentes estruturais do design bancário ("SaaS") foram mantidos, mas agora possuem fundos translúcidos (`rgba(20, 25, 40, 0.4)`), bordas suaves (`rgba(255,255,255,0.08)`) e efeito `backdrop-filter: blur(16px)`, criando uma interface premium e coesa.
+- **`style.css` & `index.html`** — Melhorias Didáticas e de UI/UX (Acessibilidade Visual):
+  - **Transações**: Filtros agora estão agrupados em `form-group` com `<label>` explícitas (ex: "Buscar Transação", "Data Inicial") para que o usuário não dependa apenas do placeholder.
+  - **Análises**: Adição de descrições textuais explicativas abaixo dos títulos dos gráficos, informando ao usuário *o que* aquele gráfico representa.
+  - **Configurações**: Implementado o CSS da classe `.setting-row` e `.setting-label` (que antes estavam ausentes), estruturando corretamente os blocos de configuração com alinhamento flex e textos legíveis de alto contraste.
+- **`app.ts` e `index.html`** — Adicionado suporte a Nome de Usuário dinâmico. O usuário pode agora definir seu nome na aba Configurações. O nome é persistido via `localStorage` e atualiza automaticamente a saudação inicial ("Olá, [Nome]!"), o perfil na sidebar e o nome impresso no cartão de crédito virtual.
+- **`index.html`** — Tradução completa da interface do tema SaaS de Inglês para Português (PT-BR), englobando menus laterais, labels de KPIs, tabelas e rodapés de gráficos.
+- **`index.html`** — Atualização estrutural da seção "Visão Geral" (Overview). Inserção do cabeçalho de saudação, cards KPI compactos com tendências, painel da "Carteira" com simulação de cartão de crédito VISA, reformulação da seção de "Últimas Transações" para o formato de lista limpa (sem cabeçalhos), e box "Transferência Rápida".
+- **`charts.ts`** — Cores e configurações do ECharts ajustadas para o novo tema light/dark. Gráfico combinado (Bar e Line) utiliza agora os novos tons de roxo, tooltip adaptada e estilo minimalista de eixos.
+
+### Build / Testes
+- ✅ Build: Validada estruturação e estilos. O layout de cards transparentes não quebrou os gráficos.
+- ✅ UX: As descrições em tela agora guiam melhor o usuário sobre o que cada campo faz.
+
+## [Unreleased] — 2026-05-26 (Premium Animation Redesign)
+
+### Added
+- **`style.css`** — Redesign premium completo com 10+ keyframe animations: `slideUp`, `float`, `pulseGlow`, `gradientShift`, `borderGlow`, `iconPop`, `countUp`, `logoSpin`. Cards KPI com entrada escalonada (staggered), hover 3D com elevação e glow neon, ícones flutuantes, botões com gradiente animado, orbs de fundo ambient, e micro-interações em toda a interface.
+
+### Build / Testes
+- ✅ Build: OK (TypeScript zero errors, Vite HMR validado em tempo real).
+- ✅ UI/UX: Animações testadas no browser — cards, sidebar, botões, tabelas e transições de página 100% funcionais.
+- N/A Cobertura de testes automatizados.
+
 ## [Unreleased] — 2026-05-26 (Automated Git Data Import)
 
 ### Added
