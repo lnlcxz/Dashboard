@@ -1,10 +1,11 @@
--- Dashboard Open Finance — DDL v1.0 (Plano Consolidado)
+-- Dashboard Open Finance — DDL v1.1 (Plano Consolidado)
 -- Ordem de criação respeitando FKs. Executar após extensões: gen_random_uuid, etc.
 
--- 1. tb_users
+-- 1. tb_users (Modificado: Removida Razão Social, Adicionado username)
 CREATE TABLE tb_users (
   id                 UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email              TEXT UNIQUE NOT NULL,
+  username           VARCHAR(50) UNIQUE NOT NULL,
   full_name          TEXT NOT NULL,
   avatar_url         TEXT,
   mfa_enabled        BOOLEAN DEFAULT false,
@@ -15,17 +16,38 @@ CREATE TABLE tb_users (
   last_login_at      TIMESTAMPTZ,
   failed_login_count INTEGER DEFAULT 0,
   locked_until       TIMESTAMPTZ,
-  role               VARCHAR(20) DEFAULT 'user',
   created_at         TIMESTAMPTZ DEFAULT NOW(),
   updated_at         TIMESTAMPTZ DEFAULT NOW(),
   deleted_at         TIMESTAMPTZ
 );
 CREATE INDEX idx_users_email ON tb_users(email) WHERE deleted_at IS NULL;
 
--- 2. tb_audit_log (sem soft delete)
+-- 2. tb_workspaces (Novo: Suporte a Multi-tenant/B2B/Família)
+CREATE TABLE tb_workspaces (
+  id                 UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name               TEXT NOT NULL, -- Razão Social ou Nome da Família
+  slug               VARCHAR(50) UNIQUE NOT NULL,
+  logo_url           TEXT,
+  created_at         TIMESTAMPTZ DEFAULT NOW(),
+  updated_at         TIMESTAMPTZ DEFAULT NOW(),
+  deleted_at         TIMESTAMPTZ
+);
+
+-- 3. tb_workspace_members (Novo: Relação Usuário <-> Workspace)
+CREATE TABLE tb_workspace_members (
+  workspace_id       UUID REFERENCES tb_workspaces(id) NOT NULL,
+  user_id            UUID REFERENCES tb_users(id) NOT NULL,
+  role               VARCHAR(20) DEFAULT 'member', -- owner, admin, member
+  created_at         TIMESTAMPTZ DEFAULT NOW(),
+  updated_at         TIMESTAMPTZ DEFAULT NOW(),
+  PRIMARY KEY (workspace_id, user_id)
+);
+
+-- 4. tb_audit_log (sem soft delete)
 CREATE TABLE tb_audit_log (
   id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id        UUID REFERENCES tb_users(id),
+  workspace_id   UUID REFERENCES tb_workspaces(id),
   action         VARCHAR(100) NOT NULL,
   resource_type  VARCHAR(50),
   resource_id    UUID,
@@ -35,10 +57,11 @@ CREATE TABLE tb_audit_log (
   created_at     TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE INDEX idx_audit_user_id ON tb_audit_log(user_id);
+CREATE INDEX idx_audit_workspace_id ON tb_audit_log(workspace_id);
 CREATE INDEX idx_audit_action ON tb_audit_log(action);
 CREATE INDEX idx_audit_created_at ON tb_audit_log(created_at DESC);
 
--- 3. tb_institutions
+-- 5. tb_institutions
 CREATE TABLE tb_institutions (
   id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name           VARCHAR(100) NOT NULL,
@@ -57,10 +80,11 @@ CREATE TABLE tb_institutions (
 CREATE INDEX idx_institutions_slug ON tb_institutions(slug);
 CREATE INDEX idx_institutions_is_active ON tb_institutions(is_active);
 
--- 4. tb_connections
+-- 6. tb_connections (Modificado: workspace_id em vez de user_id)
 CREATE TABLE tb_connections (
   id                 UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id            UUID REFERENCES tb_users(id) NOT NULL,
+  workspace_id       UUID REFERENCES tb_workspaces(id) NOT NULL,
+  created_by         UUID REFERENCES tb_users(id) NOT NULL,
   institution_id     UUID REFERENCES tb_institutions(id) NOT NULL,
   access_token       TEXT NOT NULL,
   refresh_token      TEXT,
@@ -79,21 +103,26 @@ CREATE TABLE tb_connections (
   updated_at         TIMESTAMPTZ DEFAULT NOW(),
   deleted_at         TIMESTAMPTZ
 );
-CREATE INDEX idx_connections_user_id ON tb_connections(user_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_connections_workspace_id ON tb_connections(workspace_id) WHERE deleted_at IS NULL;
 
--- 5. tb_accounts
+-- 7. tb_accounts (Modificado: workspace_id + campos de cartão de crédito)
 CREATE TABLE tb_accounts (
   id                 UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   connection_id      UUID REFERENCES tb_connections(id) NOT NULL,
-  user_id            UUID REFERENCES tb_users(id) NOT NULL,
+  workspace_id       UUID REFERENCES tb_workspaces(id) NOT NULL,
   external_id        TEXT NOT NULL,
-  account_type       VARCHAR(50) NOT NULL,
+  account_type       VARCHAR(50) NOT NULL, -- checking, savings, credit_card
   account_number     TEXT,
   agency             TEXT,
   name               TEXT NOT NULL,
   currency           VARCHAR(3) DEFAULT 'BRL',
   balance            BIGINT DEFAULT 0,
   available_balance  BIGINT DEFAULT 0,
+  -- Campos específicos para Cartões de Crédito
+  credit_limit       BIGINT,
+  invoice_due_day    INTEGER,
+  invoice_closing_day INTEGER,
+  --
   sync_status        VARCHAR(20) DEFAULT 'active',
   last_synced_at     TIMESTAMPTZ,
   created_at         TIMESTAMPTZ DEFAULT NOW(),
@@ -102,7 +131,7 @@ CREATE TABLE tb_accounts (
   CONSTRAINT unique_external_account UNIQUE (connection_id, external_id)
 );
 
--- 6. tb_sync_log
+-- 8. tb_sync_log
 CREATE TABLE tb_sync_log (
   id                  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   connection_id       UUID REFERENCES tb_connections(id) NOT NULL,
@@ -117,28 +146,28 @@ CREATE TABLE tb_sync_log (
   created_at          TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 7. tb_categories (antes de tb_transactions)
+-- 9. tb_categories
 CREATE TABLE tb_categories (
-  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  parent_id   UUID REFERENCES tb_categories(id),
-  name        TEXT NOT NULL,
-  slug        VARCHAR(100) NOT NULL,
-  icon        TEXT,
-  color       VARCHAR(7),
-  type        VARCHAR(20) NOT NULL,
-  is_system   BOOLEAN DEFAULT false,
-  user_id     UUID REFERENCES tb_users(id),
-  sort_order  INTEGER DEFAULT 0,
-  created_at  TIMESTAMPTZ DEFAULT NOW(),
-  updated_at  TIMESTAMPTZ DEFAULT NOW(),
-  deleted_at  TIMESTAMPTZ
+  id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  parent_id    UUID REFERENCES tb_categories(id),
+  workspace_id UUID REFERENCES tb_workspaces(id), -- NULL = Sistema
+  name         TEXT NOT NULL,
+  slug         VARCHAR(100) NOT NULL,
+  icon         TEXT,
+  color        VARCHAR(7),
+  type         VARCHAR(20) NOT NULL,
+  is_system    BOOLEAN DEFAULT false,
+  sort_order   INTEGER DEFAULT 0,
+  created_at   TIMESTAMPTZ DEFAULT NOW(),
+  updated_at   TIMESTAMPTZ DEFAULT NOW(),
+  deleted_at   TIMESTAMPTZ
 );
 
--- 8. tb_transactions
+-- 10. tb_transactions (Modificado: workspace_id em vez de user_id)
 CREATE TABLE tb_transactions (
   id                 UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   account_id         UUID REFERENCES tb_accounts(id) NOT NULL,
-  user_id            UUID REFERENCES tb_users(id) NOT NULL,
+  workspace_id       UUID REFERENCES tb_workspaces(id) NOT NULL,
   id_banco_origem    TEXT NOT NULL,
   date               TIMESTAMPTZ NOT NULL,
   amount             BIGINT NOT NULL,
@@ -163,13 +192,13 @@ CREATE TABLE tb_transactions (
   CONSTRAINT unique_transaction_origin UNIQUE (account_id, id_banco_origem)
 );
 CREATE INDEX idx_transactions_account_date ON tb_transactions(account_id, date DESC) WHERE deleted_at IS NULL;
-CREATE INDEX idx_transactions_user_category ON tb_transactions(user_id, category_id) WHERE deleted_at IS NULL;
+CREATE INDEX idx_transactions_workspace_category ON tb_transactions(workspace_id, category_id) WHERE deleted_at IS NULL;
 CREATE INDEX idx_transactions_description_fts ON tb_transactions USING gin(to_tsvector('portuguese', description));
 
--- 9. tb_rules
+-- 11. tb_rules
 CREATE TABLE tb_rules (
   id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id      UUID REFERENCES tb_users(id) NOT NULL,
+  workspace_id UUID REFERENCES tb_workspaces(id) NOT NULL,
   category_id  UUID REFERENCES tb_categories(id) NOT NULL,
   pattern      TEXT NOT NULL,
   match_type   VARCHAR(20) DEFAULT 'contains',
@@ -180,10 +209,10 @@ CREATE TABLE tb_rules (
   deleted_at   TIMESTAMPTZ
 );
 
--- 10. tb_budgets
+-- 12. tb_budgets
 CREATE TABLE tb_budgets (
   id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id       UUID REFERENCES tb_users(id) NOT NULL,
+  workspace_id  UUID REFERENCES tb_workspaces(id) NOT NULL,
   category_id   UUID REFERENCES tb_categories(id),
   period_type   VARCHAR(10) NOT NULL,
   start_date    DATE NOT NULL,
@@ -195,10 +224,10 @@ CREATE TABLE tb_budgets (
   deleted_at    TIMESTAMPTZ
 );
 
--- 11. tb_recurring_groups
+-- 13. tb_recurring_groups
 CREATE TABLE tb_recurring_groups (
   id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id          UUID REFERENCES tb_users(id) NOT NULL,
+  workspace_id     UUID REFERENCES tb_workspaces(id) NOT NULL,
   name             TEXT NOT NULL,
   merchant_name    TEXT,
   merchant_cnpj    TEXT,
@@ -213,10 +242,10 @@ CREATE TABLE tb_recurring_groups (
   deleted_at       TIMESTAMPTZ
 );
 
--- 12. tb_forecast_snapshots
+-- 14. tb_forecast_snapshots
 CREATE TABLE tb_forecast_snapshots (
   id                UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id           UUID REFERENCES tb_users(id) NOT NULL,
+  workspace_id      UUID REFERENCES tb_workspaces(id) NOT NULL,
   forecast_date     DATE NOT NULL,
   horizon_days      INTEGER NOT NULL,
   projected_balance BIGINT NOT NULL,
@@ -227,10 +256,11 @@ CREATE TABLE tb_forecast_snapshots (
   created_at        TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 13. tb_notifications
+-- 15. tb_notifications (Mantido por usuário, pois são pessoais)
 CREATE TABLE tb_notifications (
   id           UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id      UUID REFERENCES tb_users(id) NOT NULL,
+  workspace_id UUID REFERENCES tb_workspaces(id), -- Opcional, se atrelada a uma org
   type         VARCHAR(50) NOT NULL,
   title        TEXT NOT NULL,
   message      TEXT NOT NULL,
@@ -243,7 +273,7 @@ CREATE TABLE tb_notifications (
   deleted_at   TIMESTAMPTZ
 );
 
--- Pendência Épico 2: idempotência de webhooks
+-- 16. tb_webhook_events
 CREATE TABLE tb_webhook_events (
   id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   institution_id  UUID REFERENCES tb_institutions(id) NOT NULL,

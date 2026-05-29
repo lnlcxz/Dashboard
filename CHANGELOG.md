@@ -1,5 +1,51 @@
 # CHANGELOG
 
+## [Unreleased] — 2026-05-28 (Auth & Registration System)
+
+### Added
+- **`apps/web/src/app/(auth)/cadastro/page.tsx`** — Página completa de cadastro de usuários com:
+  - Campos: username, nome/razão social, CPF/CNPJ (máscara dinâmica), e-mail, telefone (máscara), senha, confirmar senha.
+  - Validação client-side com verificação matemática de dígitos CPF/CNPJ (não apenas formato).
+  - Indicador visual de força de senha (Fraca / Média / Forte) com barra animada.
+  - Toggle de visibilidade (ícone de olho) nos campos de senha.
+  - Botão desabilitado enquanto houver erros; loading spinner durante requisição.
+  - Mensagens de erro inline (onBlur) abaixo de cada campo inválido.
+  - Integração dupla Supabase: `auth.signUp()` + insert na tabela `usuarios`.
+  - Tradução de erros do Supabase para português.
+  - Redirecionamento para `/login?success=...` após cadastro bem-sucedido.
+- **`apps/web/src/lib/validators.ts`** — Módulo centralizado de validação:
+  - `validateCPF()` / `validateCNPJ()` com verificação de dígitos verificadores.
+  - `maskCpfCnpj()` / `maskPhone()` para máscaras dinâmicas.
+  - `getPasswordStrength()` retorna score, label, cor e percentual.
+  - `translateSupabaseError()` mapeia erros comuns para PT-BR.
+- **`apps/web/src/utils/supabase/middleware.ts`** — Rota `/cadastro` adicionada às rotas públicas.
+- **`apps/web/src/app/(auth)/login/page.tsx`** — Refatorada:
+  - Removido campo "Nome" embutido (agora é na página dedicada de cadastro).
+  - Adicionado banner de sucesso verde (exibido após cadastro).
+  - Adicionado link "Criar conta" apontando para `/cadastro`.
+- **`docs/schema/02-usuarios-supabase.sql`** — SQL para criação da tabela `usuarios` no Supabase com RLS:
+  - Políticas: INSERT/SELECT/UPDATE somente para `auth.uid() = id`.
+  - FK `auth.users(id) ON DELETE CASCADE`.
+  - Índices em username, email e documento.
+- **`services/api/src/plugins/auth.ts`** — Plugin Fastify de autenticação JWT via Supabase.
+- **`services/api/src/routes/users.ts`** — Rota `GET /api/users/me` com auto-provisionamento de workspace.
+- **`services/api/src/routes/health.ts`** — Health check modularizado com validação do banco.
+- **`services/api/.env`** — Configurado com chaves reais do Supabase.
+- **`packages/database`** — `@types/node` adicionado; Prisma Client gerado e sincronizado.
+
+### Changed
+- **`apps/prototype/package.json`** — Script `dev` renomeado para `prototype:dev` para evitar conflito de porta com Next.js no Turborepo.
+
+### Build / Testes
+- ✅ Build `apps/web`: `next build` — 0 erros TypeScript, 0 erros ESLint.
+- ✅ Build `services/api`: `tsc` — 0 erros.
+- ✅ Build `packages/database`: `tsc` — 0 erros.
+- ✅ Docker: PostgreSQL e Redis healthy (portas 5432/6379).
+- ✅ Prisma: Schema sincronizado com banco local (`db push` OK).
+- N/A Cobertura de testes automatizados.
+
+---
+
 ## [Unreleased] — 2026-05-26 (SaaS Light Theme Redesign)
 
 ### Added

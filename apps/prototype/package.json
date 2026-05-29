@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "FinDash — Dashboard Financeiro Inteligente",
   "scripts": {
-    "dev": "vite --port 3000",
+    "prototype:dev": "vite --port 3000",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --port 3000"
   },

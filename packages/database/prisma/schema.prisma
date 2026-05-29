@@ -1,0 +1,388 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 1. tb_users
+model User {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email              String    @unique
+  username           String    @unique @db.VarChar(50)
+  fullName           String    @map("full_name")
+  avatarUrl          String?   @map("avatar_url")
+  mfaEnabled         Boolean   @default(false) @map("mfa_enabled")
+  mfaSecret          String?   @map("mfa_secret")
+  locale             String?   @default("pt-BR") @db.VarChar(10)
+  timezone           String?   @default("America/Sao_Paulo") @db.VarChar(50)
+  notificationPrefs  Json?     @default("{\"email\": true, \"push\": false}") @map("notification_prefs")
+  lastLoginAt        DateTime? @db.Timestamptz() @map("last_login_at")
+  failedLoginCount   Int       @default(0) @map("failed_login_count")
+  lockedUntil        DateTime? @db.Timestamptz() @map("locked_until")
+  createdAt          DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+  updatedAt          DateTime  @default(now()) @db.Timestamptz() @map("updated_at")
+  deletedAt          DateTime? @db.Timestamptz() @map("deleted_at")
+
+  workspaces         WorkspaceMember[]
+  connectionsCreated Connection[]      @relation("CreatedBy")
+  auditLogs          AuditLog[]
+  notifications      Notification[]
+
+  @@index([email])
+  @@map("tb_users")
+}
+
+// 2. tb_workspaces
+model Workspace {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name               String    
+  slug               String    @unique @db.VarChar(50)
+  logoUrl            String?   @map("logo_url")
+  createdAt          DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+  updatedAt          DateTime  @default(now()) @db.Timestamptz() @map("updated_at")
+  deletedAt          DateTime? @db.Timestamptz() @map("deleted_at")
+
+  members            WorkspaceMember[]
+  auditLogs          AuditLog[]
+  connections        Connection[]
+  accounts           Account[]
+  categories         Category[]
+  transactions       Transaction[]
+  rules              Rule[]
+  budgets            Budget[]
+  recurringGroups    RecurringGroup[]
+  forecastSnapshots  ForecastSnapshot[]
+  notifications      Notification[]
+
+  @@map("tb_workspaces")
+}
+
+// 3. tb_workspace_members
+model WorkspaceMember {
+  workspaceId        String    @map("workspace_id") @db.Uuid
+  userId             String    @map("user_id") @db.Uuid
+  role               String?   @default("member") @db.VarChar(20)
+  createdAt          DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+  updatedAt          DateTime  @default(now()) @db.Timestamptz() @map("updated_at")
+
+  workspace          Workspace @relation(fields: [workspaceId], references: [id])
+  user               User      @relation(fields: [userId], references: [id])
+
+  @@id([workspaceId, userId])
+  @@map("tb_workspace_members")
+}
+
+// 4. tb_audit_log
+model AuditLog {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId         String?   @map("user_id") @db.Uuid
+  workspaceId    String?   @map("workspace_id") @db.Uuid
+  action         String    @db.VarChar(100)
+  resourceType   String?   @map("resource_type") @db.VarChar(50)
+  resourceId     String?   @map("resource_id") @db.Uuid
+  ipAddress      String?   @map("ip_address") // Prisma maps INET to String
+  userAgent      String?   @map("user_agent")
+  metadata       Json?
+  createdAt      DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+
+  user           User?      @relation(fields: [userId], references: [id])
+  workspace      Workspace? @relation(fields: [workspaceId], references: [id])
+
+  @@index([userId])
+  @@index([workspaceId])
+  @@index([action])
+  @@index([createdAt(sort: Desc)])
+  @@map("tb_audit_log")
+}
+
+// 5. tb_institutions
+model Institution {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name           String    @db.VarChar(100)
+  slug           String    @unique @db.VarChar(50)
+  ispb           String?   @db.VarChar(8)
+  logoUrl        String?   @map("logo_url")
+  colorPrimary   String?   @map("color_primary") @db.VarChar(7)
+  adapterClass   String?   @map("adapter_class") @db.VarChar(200)
+  apiBaseUrl     String?   @map("api_base_url")
+  participantId  String?   @map("participant_id") @db.VarChar(50)
+  supportsMtls   Boolean?  @default(true) @map("supports_mtls")
+  isActive       Boolean?  @default(true) @map("is_active")
+  createdAt      DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+  updatedAt      DateTime  @default(now()) @db.Timestamptz() @map("updated_at")
+
+  connections    Connection[]
+  webhookEvents  WebhookEvent[]
+
+  @@index([slug])
+  @@index([isActive])
+  @@map("tb_institutions")
+}
+
+// 6. tb_connections
+model Connection {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  workspaceId        String    @map("workspace_id") @db.Uuid
+  createdBy          String    @map("created_by") @db.Uuid
+  institutionId      String    @map("institution_id") @db.Uuid
+  accessToken        String    @map("access_token")
+  refreshToken       String?   @map("refresh_token")
+  iv                 String
+  scope              String[]
+  tokenExpiresAt     DateTime? @db.Timestamptz() @map("token_expires_at")
+  refreshExpiresAt   DateTime? @db.Timestamptz() @map("refresh_expires_at")
+  consentId          String?   @map("consent_id")
+  consentExpiresAt   DateTime? @db.Timestamptz() @map("consent_expires_at")
+  syncStatus         String?   @default("active") @db.VarChar(20) @map("sync_status")
+  lastSyncedAt       DateTime? @db.Timestamptz() @map("last_synced_at")
+  syncErrorCount     Int?      @default(0) @map("sync_error_count")
+  lastErrorMessage   String?   @map("last_error_message")
+  webhookUrl         String?   @map("webhook_url")
+  createdAt          DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+  updatedAt          DateTime  @default(now()) @db.Timestamptz() @map("updated_at")
+  deletedAt          DateTime? @db.Timestamptz() @map("deleted_at")
+
+  workspace          Workspace @relation(fields: [workspaceId], references: [id])
+  user               User      @relation("CreatedBy", fields: [createdBy], references: [id])
+  institution        Institution @relation(fields: [institutionId], references: [id])
+  accounts           Account[]
+  syncLogs           SyncLog[]
+
+  @@index([workspaceId])
+  @@map("tb_connections")
+}
+
+// 7. tb_accounts
+model Account {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  connectionId       String    @map("connection_id") @db.Uuid
+  workspaceId        String    @map("workspace_id") @db.Uuid
+  externalId         String    @map("external_id")
+  accountType        String    @map("account_type") @db.VarChar(50)
+  accountNumber      String?   @map("account_number")
+  agency             String?
+  name               String
+  currency           String?   @default("BRL") @db.VarChar(3)
+  balance            BigInt?   @default(0)
+  availableBalance   BigInt?   @default(0) @map("available_balance")
+  creditLimit        BigInt?   @map("credit_limit")
+  invoiceDueDay      Int?      @map("invoice_due_day")
+  invoiceClosingDay  Int?      @map("invoice_closing_day")
+  syncStatus         String?   @default("active") @db.VarChar(20) @map("sync_status")
+  lastSyncedAt       DateTime? @db.Timestamptz() @map("last_synced_at")
+  createdAt          DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+  updatedAt          DateTime  @default(now()) @db.Timestamptz() @map("updated_at")
+  deletedAt          DateTime? @db.Timestamptz() @map("deleted_at")
+
+  connection         Connection @relation(fields: [connectionId], references: [id])
+  workspace          Workspace  @relation(fields: [workspaceId], references: [id])
+  transactions       Transaction[]
+
+  @@unique([connectionId, externalId])
+  @@map("tb_accounts")
+}
+
+// 8. tb_sync_log
+model SyncLog {
+  id                  String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  connectionId        String    @map("connection_id") @db.Uuid
+  status              String    @db.VarChar(20)
+  startedAt           DateTime  @db.Timestamptz() @map("started_at")
+  finishedAt          DateTime? @db.Timestamptz() @map("finished_at")
+  durationMs          Int?      @map("duration_ms")
+  accountsSynced      Int?      @default(0) @map("accounts_synced")
+  transactionsSynced  Int?      @default(0) @map("transactions_synced")
+  errorMessage        String?   @map("error_message")
+  errorStack          String?   @map("error_stack")
+  createdAt           DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+
+  connection          Connection @relation(fields: [connectionId], references: [id])
+
+  @@map("tb_sync_log")
+}
+
+// 9. tb_categories
+model Category {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  parentId     String?   @map("parent_id") @db.Uuid
+  workspaceId  String?   @map("workspace_id") @db.Uuid
+  name         String
+  slug         String    @db.VarChar(100)
+  icon         String?
+  color        String?   @db.VarChar(7)
+  type         String    @db.VarChar(20)
+  isSystem     Boolean?  @default(false) @map("is_system")
+  sortOrder    Int?      @default(0) @map("sort_order")
+  createdAt    DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+  updatedAt    DateTime  @default(now()) @db.Timestamptz() @map("updated_at")
+  deletedAt    DateTime? @db.Timestamptz() @map("deleted_at")
+
+  parent       Category? @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children     Category[] @relation("CategoryHierarchy")
+  workspace    Workspace? @relation(fields: [workspaceId], references: [id])
+  transactions Transaction[]
+  rules        Rule[]
+  budgets      Budget[]
+
+  @@map("tb_categories")
+}
+
+// 10. tb_transactions
+model Transaction {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  accountId          String    @map("account_id") @db.Uuid
+  workspaceId        String    @map("workspace_id") @db.Uuid
+  idBancoOrigem      String    @map("id_banco_origem")
+  date               DateTime  @db.Timestamptz()
+  amount             BigInt
+  currency           String?   @default("BRL") @db.VarChar(3)
+  description        String
+  descriptionRaw     String?   @map("description_raw")
+  merchantName       String?   @map("merchant_name")
+  merchantCnpj       String?   @map("merchant_cnpj")
+  transactionType    String    @map("transaction_type") @db.VarChar(20)
+  status             String    @default("settled") @db.VarChar(20)
+  categoryId         String?   @map("category_id") @db.Uuid
+  counterpartId      String?   @map("counterpart_id") @db.Uuid
+  isRecurring        Boolean?  @default(false) @map("is_recurring")
+  recurringPeriod    String?   @map("recurring_period") @db.VarChar(20)
+  recurringGroupId   String?   @map("recurring_group_id") @db.Uuid
+  tags               String[]
+  notes              String?
+  attachments        String[]
+  createdAt          DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+  updatedAt          DateTime  @default(now()) @db.Timestamptz() @map("updated_at")
+  deletedAt          DateTime? @db.Timestamptz() @map("deleted_at")
+
+  account            Account    @relation(fields: [accountId], references: [id])
+  workspace          Workspace  @relation(fields: [workspaceId], references: [id])
+  category           Category?  @relation(fields: [categoryId], references: [id])
+  counterpart        Transaction? @relation("Counterpart", fields: [counterpartId], references: [id])
+  counterpartReverse Transaction[] @relation("Counterpart")
+  recurringGroup     RecurringGroup? @relation(fields: [recurringGroupId], references: [id])
+
+  @@unique([accountId, idBancoOrigem])
+  @@index([accountId, date(sort: Desc)])
+  @@index([workspaceId, categoryId])
+  @@map("tb_transactions")
+}
+
+// 11. tb_rules
+model Rule {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  workspaceId  String    @map("workspace_id") @db.Uuid
+  categoryId   String    @map("category_id") @db.Uuid
+  pattern      String
+  matchType    String?   @default("contains") @db.VarChar(20) @map("match_type")
+  priority     Int?      @default(0)
+  isActive     Boolean?  @default(true) @map("is_active")
+  createdAt    DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+  updatedAt    DateTime  @default(now()) @db.Timestamptz() @map("updated_at")
+  deletedAt    DateTime? @db.Timestamptz() @map("deleted_at")
+
+  workspace    Workspace @relation(fields: [workspaceId], references: [id])
+  category     Category  @relation(fields: [categoryId], references: [id])
+
+  @@map("tb_rules")
+}
+
+// 12. tb_budgets
+model Budget {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  workspaceId   String    @map("workspace_id") @db.Uuid
+  categoryId    String?   @map("category_id") @db.Uuid
+  periodType    String    @map("period_type") @db.VarChar(10)
+  startDate     DateTime  @db.Date @map("start_date")
+  endDate       DateTime? @db.Date @map("end_date")
+  amount        BigInt
+  alertAtPct    Int?      @default(80) @map("alert_at_pct")
+  createdAt     DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+  updatedAt     DateTime  @default(now()) @db.Timestamptz() @map("updated_at")
+  deletedAt     DateTime? @db.Timestamptz() @map("deleted_at")
+
+  workspace     Workspace @relation(fields: [workspaceId], references: [id])
+  category      Category? @relation(fields: [categoryId], references: [id])
+
+  @@map("tb_budgets")
+}
+
+// 13. tb_recurring_groups
+model RecurringGroup {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  workspaceId      String    @map("workspace_id") @db.Uuid
+  name             String
+  merchantName     String?   @map("merchant_name")
+  merchantCnpj     String?   @map("merchant_cnpj")
+  period           String    @db.VarChar(20)
+  averageAmount    BigInt    @map("average_amount")
+  firstOccurrence  DateTime  @db.Timestamptz() @map("first_occurrence")
+  lastOccurrence   DateTime? @db.Timestamptz() @map("last_occurrence")
+  nextExpected     DateTime? @db.Timestamptz() @map("next_expected")
+  isActive         Boolean?  @default(true) @map("is_active")
+  createdAt        DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+  updatedAt        DateTime  @default(now()) @db.Timestamptz() @map("updated_at")
+  deletedAt        DateTime? @db.Timestamptz() @map("deleted_at")
+
+  workspace        Workspace @relation(fields: [workspaceId], references: [id])
+  transactions     Transaction[]
+
+  @@map("tb_recurring_groups")
+}
+
+// 14. tb_forecast_snapshots
+model ForecastSnapshot {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  workspaceId       String    @map("workspace_id") @db.Uuid
+  forecastDate      DateTime  @db.Date @map("forecast_date")
+  horizonDays       Int       @map("horizon_days")
+  projectedBalance  BigInt    @map("projected_balance")
+  projectedIncome   BigInt    @map("projected_income")
+  projectedExpense  BigInt    @map("projected_expense")
+  confidenceScore   Decimal?  @db.Decimal(3, 2) @map("confidence_score")
+  algorithmVersion  String?   @default("v1") @db.VarChar(20) @map("algorithm_version")
+  createdAt         DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+
+  workspace         Workspace @relation(fields: [workspaceId], references: [id])
+
+  @@map("tb_forecast_snapshots")
+}
+
+// 15. tb_notifications
+model Notification {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId       String    @map("user_id") @db.Uuid
+  workspaceId  String?   @map("workspace_id") @db.Uuid
+  type         String    @db.VarChar(50)
+  title        String
+  message      String
+  actionUrl    String?   @map("action_url")
+  actionLabel  String?   @map("action_label")
+  metadata     Json?
+  isRead       Boolean?  @default(false) @map("is_read")
+  readAt       DateTime? @db.Timestamptz() @map("read_at")
+  createdAt    DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+  deletedAt    DateTime? @db.Timestamptz() @map("deleted_at")
+
+  user         User      @relation(fields: [userId], references: [id])
+  workspace    Workspace? @relation(fields: [workspaceId], references: [id])
+
+  @@map("tb_notifications")
+}
+
+// 16. tb_webhook_events
+model WebhookEvent {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  institutionId   String    @map("institution_id") @db.Uuid
+  webhookEventId  String    @map("webhook_event_id")
+  payloadHash     String?   @map("payload_hash")
+  processedAt     DateTime? @db.Timestamptz() @map("processed_at")
+  createdAt       DateTime  @default(now()) @db.Timestamptz() @map("created_at")
+
+  institution     Institution @relation(fields: [institutionId], references: [id])
+
+  @@unique([institutionId, webhookEventId])
+  @@map("tb_webhook_events")
+}

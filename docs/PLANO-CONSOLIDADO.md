@@ -201,23 +201,27 @@ dashboard-openfinance/
 | **Idempotência** | `id_banco_origem` único | Evita duplicação de transações |
 | **Índices** | B-Tree compostos | Performance em queries críticas |
 
-### 3.2 Tabelas (13)
+### 3.2 Tabelas (16)
 
-1. `tb_users` — MFA, locale, timezone, prefs, lock de login, role
-2. `tb_audit_log` — imutável, LGPD
-3. `tb_institutions` — ISPB, slug, adapter_class, participant_id OFB
-4. `tb_connections` — OAuth criptografado, consent OFB, sync status
-5. `tb_accounts` — saldos em centavos, external_id
-6. `tb_sync_log` — rastreio de execuções de sync
-7. `tb_categories` — hierárquicas, sistema + usuário
-8. `tb_transactions` — merchant, tipo, status, recorrência, FTS
-9. `tb_rules` — motor de categorização
-10. `tb_budgets` — orçamentos com alert_at_pct
-11. `tb_recurring_groups` — assinaturas detectadas
-12. `tb_forecast_snapshots` — projeções 30/90 dias
-13. `tb_notifications` — in-app
+1. `tb_users` — MFA, locale, timezone, prefs, lock de login, role, username
+2. `tb_workspaces` — Multi-tenant, nome da família/empresa
+3. `tb_workspace_members` — Relação usuário <-> workspace (role)
+4. `tb_audit_log` — imutável, LGPD
+5. `tb_institutions` — ISPB, slug, adapter_class (BaaS Aggregator)
+6. `tb_connections` — Auth BaaS, sync status
+7. `tb_accounts` — saldos em centavos, external_id, credit card rules
+8. `tb_sync_log` — rastreio de execuções de sync
+9. `tb_categories` — hierárquicas, sistema + workspace
+10. `tb_transactions` — merchant, tipo, status, recorrência, FTS
+11. `tb_rules` — motor de categorização
+12. `tb_budgets` — orçamentos com alert_at_pct
+13. `tb_recurring_groups` — assinaturas detectadas
+14. `tb_forecast_snapshots` — projeções 30/90 dias
+15. `tb_notifications` — in-app
+16. `tb_webhook_events` — idempotência de webhooks
 
-**Pendência técnica (Épico 2):** adicionar `tb_webhook_events` para idempotência de webhooks (`webhook_event_id` UNIQUE).
+**Modelo de Dados:** Orientado a `workspace_id` (B2B / Compartilhamento Familiar).
+**RLS:** `auth.uid()` deve estar vinculado às permissões em `tb_workspace_members`.
 
 **RLS:** `auth.uid()` deve corresponder a `tb_users.id` (recomendado: mesmo UUID do Supabase Auth).
 
@@ -242,14 +246,13 @@ Políticas RLS (`auth.uid() = user_id`) e índices adicionais: aplicar conforme 
 
 ---
 
-## 5. OPEN FINANCE BRASIL
+## 5. OPEN FINANCE (VIA AGREGADOR BAAS)
 
-- Regulamentação: BCB nº 1, Circular 4.015, FAPI 2.0
-- Endpoints: `POST/GET/DELETE /consents`
-- Escopos: `accounts`, `accounts.balances`, `credit-cards-accounts`, etc.
-- Refresh de consentimento: 12 meses (`RefreshConsentJob` diário)
-- Diretório: produção e sandbox do Open Banking Brasil
-- Desenvolvimento offline: fixtures JSON nos adapters
+- Parceiro: Agregador BaaS (ex: Belvo, Pluggy ou Klavi)
+- Vantagens: Sandbox unificado com mock data, zero burocracia de FAPI 2.0 / certificados DCR / mTLS no MVP.
+- Endpoints: Integração via SDK/API do agregador.
+- Webhooks: Recebimento de eventos unificados do agregador (ex: `TRANSACTIONS_SYNCED`).
+- Desenvolvimento offline: fixtures JSON do próprio SDK do BaaS.
 
 ---
 
@@ -326,7 +329,7 @@ Linha, rosca, waterfall, barras empilhadas, KPI cards, treemap, heatmap.
 
 - **0 — Fundação:** monorepo, Docker, Prisma, CI, CHANGELOG, README
 - **1 — Auth:** Supabase, rotas auth, MFA prep, telas login/cadastro/reset, E2E
-- **2 — Bancos:** adapters, OAuth, consents OFB, sync, webhooks, jobs token/keys/consent
+- **2 — Bancos:** integração SDK Agregador BaaS, webhooks de sync, adapters unificados
 - **3 — Transações:** API cursor + filtros + bulk, lista virtualizada, filtros na URL
 
 ### FASE 2 — Dashboard (Épicos 4–6, ~8 sem)
@@ -364,11 +367,10 @@ Linha, rosca, waterfall, barras empilhadas, KPI cards, treemap, heatmap.
 |-------------|------|
 | Conta Supabase | Épico 1 |
 | Conta Doppler | Épico 0 |
-| Sandbox bancos | Épico 2 (testes reais) |
-| FAPI 2.0 + mTLS | Produção |
-| Modelo de negócio (SaaS/pessoal) | Épico 9 |
+| Conta Agregador BaaS | Épico 2 (Chaves de API) |
+| Fluxo de Criação de Workspaces | Épico 1 (Auth) |
 
-**Sem sandbox:** usar fixtures JSON nos adapters.
+**Sem sandbox no BaaS:** usar mocks do próprio provedor (ex: Belvo sandbox links).
 
 ---
 
@@ -376,8 +378,8 @@ Linha, rosca, waterfall, barras empilhadas, KPI cards, treemap, heatmap.
 
 - [x] Stack definida
 - [x] Estrutura de monorepo
-- [x] 13 tabelas (+ `tb_webhook_events` no Épico 2)
-- [x] Segurança e OFB
+- [x] 16 tabelas (Multi-tenant Workspaces + Cartão de Crédito)
+- [x] Segurança via Agregador BaaS
 - [x] 8 jobs BullMQ
 - [x] Algoritmos recorrência e forecast
 - [x] Métricas Moto G
