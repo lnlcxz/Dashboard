@@ -1,6 +1,16 @@
 # CHANGELOG
 
+## [Unreleased] — 2026-06-01 (Progress Status Report)
+
+### Added
+- **`docs/RELATORIO-PROGRESSO.md`** — Relatório detalhado unificando todo o andamento do projeto, marcos concluídos (Infra, DB Schema, Supabase Auth, Cadastro CPF/CNPJ matemático) e roadmap de pendências por fases.
+
+### Build / Testes
+- ✅ Build: Sem erros de build em `web`, `api` ou `database`.
+- N/A Cobertura de testes automatizados.
+
 ## [Unreleased] — 2026-05-28 (Auth & Registration System)
+
 
 ### Added
 - **`apps/web/src/app/(auth)/cadastro/page.tsx`** — Página completa de cadastro de usuários com:

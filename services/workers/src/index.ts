@@ -7,6 +7,6 @@ const connection = new IORedis(process.env.REDIS_URL || 'redis://localhost:6379'
 const syncWorker = new Worker('sync-queue', async job => {
   console.log(`Processing sync job ${job.id} for connection ${job.data.connectionId}`);
   // Lógica de sync do Open Finance entrará aqui
-}, { connection });
+}, { connection: connection as any });
 
 console.log('BullMQ Workers are running and listening to Redis...');
